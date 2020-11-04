@@ -1,28 +1,36 @@
 {
   "name": "vue3-apexcharts",
   "version": "1.0.0",
-  "description": "Vue-3 component for ApexCharts",
-  "main": "dist/vue-apexcharts.js",
+  "main": "./dist/vue3-apexcharts.common.js",
+  "private": false,
   "scripts": {
-    "build": "vue-cli-service build --target lib --name vue3-apexcharts src/index.js"
+    "test": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint",
+    "build": "vue-cli-service build --target lib --name vue3-apexcharts src/index.js && copyfiles --flat typings/*.ts dist"
   },
-  "keywords": [
-    "Vue.js",
-    "apexcharts",
-    "vue",
-    "charts",
-    "visualizations"
+  "author": "Alan Smith <alan@mralansmith.com>",
+  "files": [
+    "src",
+    "dist/vue3-apexcharts.common.js"
   ],
-  "author": {
-    "name": "Juned Chhipa",
-    "email": "juned.chhipa@gmail.com"
-  },
-  "bugs": {
-    "url": "https://github.com/apexcharts/vue3-apexcharts/issues"
-  },
   "license": "MIT",
+  "keywords": [
+    "vuejs",
+    "vue3",
+    "charts",
+    "apexcharts.js",
+    "apexcharts"
+  ],
+  "bugs": {
+    "url": "https://github.com/smithalan92/vue3-apexcharts/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smithalan92/vue3-apexcharts.git"
+  },
   "peerDependencies": {
-    "apexcharts": "^3.22.1"
+    "vue": "> 3.0.0",
+    "apexcharts": "> 3.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-eslint": "~4.5.0",
@@ -30,10 +38,14 @@
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0-0",
     "@vue/eslint-config-airbnb": "^5.0.2",
+    "@vue/test-utils": "^2.0.0-0",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^7.0.0-0",
     "apexcharts": "^3.22.1",
-    "vue": "^3.0.0"
+    "typescript": "~3.9.3",
+    "vue": "^3.0.0",
+    "copyfiles": "2.4.0",
+    "vue-jest": "^5.0.0-0"
   }
 }

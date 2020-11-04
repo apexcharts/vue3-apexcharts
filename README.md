@@ -1,5 +1,3 @@
-## Work in Progress. Do not use in Production
-
 <p align="center"><img src="https://apexcharts.com/media/vue-apexcharts.png"></p>
 
 <p align="center">
@@ -31,9 +29,22 @@ If you're looking for Vue 2.x.x compatibile component, check-out <a href="https:
 
 ```js
 import VueApexCharts from "vue3-apexcharts";
-Vue.use(VueApexCharts);
 
-Vue.component("apexchart", VueApexCharts);
+const app = createApp(App);
+app.use(VueApexCharts);
+// The app.use(VueApexCharts) will make <apexchart> component available everywhere.
+```
+
+OR
+
+```js
+// you can import in a particular component and register the component like below
+import VueApexCharts from "vue3-apexcharts";
+export default {
+  components: {
+    apexchart: VueApexCharts,
+  },
+};
 ```
 
 To create a basic bar chart with minimal configuration, write as follows:
@@ -53,7 +64,7 @@ To create a basic bar chart with minimal configuration, write as follows:
 
 ```js
 export default {
-  data: function () {
+  data: function() {
     return {
       chartOptions: {
         chart: {
@@ -82,7 +93,7 @@ This will render the following chart
 
 Simple! Just change the `series` or any `option` and it will automatically re-render the chart. <br/> Click on the below example to see this in action
 
-<p><a href="https://codesandbox.io/s/voyy36o7y"><img src="https://apexcharts.com/media/vue-chart-updation.gif"></a></p>
+<p><img src="https://apexcharts.com/media/vue-chart-updation.gif"></p>
 
 ```vue
 <template>
@@ -102,7 +113,7 @@ Simple! Just change the `series` or any `option` and it will automatically re-re
 
 ```js
 export default {
-  data: function () {
+  data: function() {
     return {
       chartOptions: {
         chart: {
@@ -201,35 +212,14 @@ You don't actually need to call updateSeries() or updateOptions() manually. Chan
 | <a href="https://apexcharts.com/docs/methods/#addyaxisannotation">addYaxisAnnotation</a> | Draw y-axis annotations after chart is rendered.                                                   |
 | <a href="https://apexcharts.com/docs/methods/#addpointannotation">addPointAnnotation</a> | Draw point (xy) annotations after chart is rendered.                                               |
 
-How to call the methods mentioned above?
-
-```html
-<template>
-  <div class="example">
-    <apexchart
-      ref="demoChart"
-      width="500"
-      :options="chartOptions"
-      :series="series"
-    ></apexchart>
-  </div>
-</template>
-
-<script>
-  functionName: function() {
-    this.$refs.demoChart.updateOptions({ colors: newColors })
-  },
-</script>
-```
-
 ## How to call methods of ApexCharts without referencing the chart element?
 
-Sometimes, you may want to call methods of the core ApexCharts library from some other place, and you can do so on `this.$apexcharts` global variable directly. You need to target the chart by <code>chart.id</code> while calling this method
+Sometimes, you may want to call methods of the core ApexCharts library from some other place, and you can do so on `window.ApexCharts` global variable directly. You need to target the chart by <code>chart.id</code> while calling this method
 
 Example
 
 ```js
-this.$apexcharts.exec("vuechart-example", "updateSeries", [
+window.ApexCharts.exec("vuechart-example", "updateSeries", [
   {
     data: [40, 55, 65, 11, 23, 44, 54, 33],
   },
@@ -242,30 +232,16 @@ More info on the `.exec()` method can be found <a href="https://apexcharts.com/d
 
 All other methods of ApexCharts can be called the same way.
 
-## What's included
-
-The repository includes the following files and directories.
-
-```
-vue3-apexcharts/
-├── dist/
-│   └── vue-apexcharts.js
-└── src/
-    ├── ApexCharts.component.js
-    ├── Utils.js
-    └── index.js
-```
-
 ## Running the examples
 
-Basic Examples are included to show how to get started using ApexCharts with Vue easily.
+Basic Examples are included to show how to get started using ApexCharts with Vue 3 easily.
 
 To run the examples,
 
 ```bash
-cd example
-npm install
-npm run serve
+cd demo
+yarn install
+yarn start
 ```
 
 ## Development
@@ -273,13 +249,13 @@ npm run serve
 #### Install dependencies
 
 ```bash
-npm install
+yarn install
 ```
 
 #### Bundling
 
 ```bash
-npm run build
+yarn build
 ```
 
 ## Supporting ApexCharts

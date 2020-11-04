@@ -1,5 +1,28 @@
 .DS_Store
-node_modules/
+node_modules
+dist/
+dist/vue3-apexcharts.common.js.map
+dist/vue3-apexcharts.umd.js
+dist/vue3-apexcharts.umd.js.map
+dist/vue3-apexcharts.umd.min.js
+dist/vue3-apexcharts.umd.min.js.map
+demo/node_modules
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
 npm-debug.log*
-coverage
-issues
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

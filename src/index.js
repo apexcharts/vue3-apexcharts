@@ -1,13 +1,10 @@
-import ApexCharts from "apexcharts";
-import Vue3ApexCharts from './ApexCharts.component';
+/* eslint-disable */
+import Vue3Apexcharts from "./vue3-apexcharts";
 
-window.ApexCharts = ApexCharts;
-
-const install = (app) => {
-    window.ApexCharts = ApexCharts;
-    app.component(Vue3ApexCharts.name, Vue3ApexCharts);
+const install = app => {
+  app.component(Vue3Apexcharts.name, Vue3Apexcharts);
 };
 
-Vue3ApexCharts.install = install;
+Vue3Apexcharts.install = install;
 
-export default Vue3ApexCharts
+export default Vue3Apexcharts;
