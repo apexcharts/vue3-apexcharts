@@ -1,20 +1,13 @@
-import ApexCharts from "apexcharts/dist/apexcharts.min";
-import ApexChartsComponent from './ApexCharts.component';
+import ApexCharts from "apexcharts";
+import Vue3ApexCharts from './ApexCharts.component';
 
-const VueApexCharts = ApexChartsComponent;
 window.ApexCharts = ApexCharts;
 
-VueApexCharts.install = function (Vue) {
-    //adding a global method or property
-    Vue.ApexCharts = ApexCharts;
+const install = (app) => {
     window.ApexCharts = ApexCharts;
-  
-    // add the instance method
-    Object.defineProperty(Vue.prototype, '$apexcharts', {
-        get: function get() {
-            return ApexCharts
-        }
-    });
+    app.component(Vue3ApexCharts.name, Vue3ApexCharts);
 };
 
-export default VueApexCharts
+Vue3ApexCharts.install = install;
+
+export default Vue3ApexCharts

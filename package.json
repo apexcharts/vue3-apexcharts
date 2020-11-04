@@ -4,8 +4,7 @@
   "description": "Vue-3 component for ApexCharts",
   "main": "dist/vue-apexcharts.js",
   "scripts": {
-    "bundle": "rollup -c",
-    "build": "npm run bundle"
+    "build": "vue-cli-service build --target lib --name vue3-apexcharts src/index.js"
   },
   "keywords": [
     "Vue.js",
@@ -26,19 +25,15 @@
     "apexcharts": "^3.22.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.0",
-    "@babel/plugin-external-helpers": "^7.0.0",
-    "@babel/plugin-proposal-decorators": "^7.4.0",
-    "@babel/plugin-transform-runtime": "^7.0.0",
-    "@babel/preset-env": "^7.4.2",
-    "rollup": "^0.64.1",
-    "rollup-plugin-babel": "^4.3.2",
-    "rollup-plugin-commonjs": "^9.1.8",
-    "rollup-plugin-copy": "^0.2.3",
-    "rollup-plugin-eslint": "^5.1.0",
-    "rollup-plugin-istanbul": "^2.0.1",
-    "rollup-plugin-node-resolve": "^3.4.0",
-    "uglify-js": "^3.4.9",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-unit-jest": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0-0",
+    "@vue/eslint-config-airbnb": "^5.0.2",
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-vue": "^7.0.0-0",
+    "apexcharts": "^3.22.1",
     "vue": "^3.0.0"
   }
 }

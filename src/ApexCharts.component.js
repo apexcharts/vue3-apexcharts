@@ -7,9 +7,10 @@ import {
   onBeforeMount,
   nextTick,
 } from "vue";
-import ApexCharts from "apexcharts/dist/apexcharts.min";
+import ApexCharts from "apexcharts";
 
-export default defineComponent({
+const Vue3ApexCharts = defineComponent({
+  name: 'VueApexchart',
   props: {
     options: {
       type: Object,
@@ -252,6 +253,15 @@ export default defineComponent({
       }
     );
 
-    return { el };
+    return { el, chart };
+  },
+
+  render() {
+    return h('div', {
+      class: 'vue-apexcharts',
+      ref: 'el',
+    });
   },
 });
+
+export default Vue3ApexCharts
