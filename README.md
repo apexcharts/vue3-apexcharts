@@ -1,3 +1,5 @@
+## Work in Progress. Do not use in Production
+
 <p align="center"><img src="https://apexcharts.com/media/vue-apexcharts.png"></p>
 
 <p align="center">
