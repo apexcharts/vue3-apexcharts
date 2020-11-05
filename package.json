@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint",
     "build": "vue-cli-service build --target lib --name vue3-apexcharts src/index.js && copyfiles --flat typings/*.ts dist"
   },
-  "author": "Alan Smith <alan@mralansmith.com>",
+  "author": "Juned Chhipa",
   "files": [
     "src",
     "dist/vue3-apexcharts.common.js"
@@ -22,11 +22,11 @@
     "apexcharts"
   ],
   "bugs": {
-    "url": "https://github.com/smithalan92/vue3-apexcharts/issues"
+    "url": "https://github.com/apexcharts/vue3-apexcharts/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/smithalan92/vue3-apexcharts.git"
+    "url": "git+https://github.com/apexcharts/vue3-apexcharts.git"
   },
   "peerDependencies": {
     "vue": "> 3.0.0",
