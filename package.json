@@ -11,7 +11,8 @@
   "author": "Juned Chhipa",
   "files": [
     "src",
-    "dist/vue3-apexcharts.common.js"
+    "dist/vue3-apexcharts.common.js",
+    "typings"
   ],
   "license": "MIT",
   "keywords": [
@@ -47,5 +48,6 @@
     "vue": "^3.0.0",
     "copyfiles": "2.4.0",
     "vue-jest": "^5.0.0-0"
-  }
+  },
+  "typings": "./typings/vue-apexcharts.d.ts"
 }
