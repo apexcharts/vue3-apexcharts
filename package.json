@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint",
     "build": "vue-cli-service build --target lib --name vue3-apexcharts src/index.js && copyfiles --flat typings/*.ts dist"
   },
+  "typings": "./typings/vue-apexcharts.d.ts",
   "author": "Juned Chhipa",
   "files": [
     "src",
