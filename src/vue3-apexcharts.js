@@ -219,7 +219,8 @@ const vueApexcharts = defineComponent({
         } else {
           chart.value.updateSeries(props.series);
         }
-      }
+      },
+      {deep: true}
     );
 
     watch(
