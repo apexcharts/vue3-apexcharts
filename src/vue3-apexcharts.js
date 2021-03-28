@@ -1,257 +1,298 @@
 /* eslint-disable */
 import {
-  h,
-  defineComponent,
-  ref,
-  onMounted,
-  onBeforeUnmount,
-  watch,
-  onBeforeMount,
-  nextTick
+	h,
+	defineComponent,
+	ref,
+	onMounted,
+	onBeforeUnmount,
+	watch,
+	onBeforeMount,
+	nextTick,
 } from "vue";
 import ApexCharts from "apexcharts";
 
+// define all emitted events in order to better
+// document how the component should work
+const events = [
+	"animationEnd",
+	"beforeMount",
+	"mounted",
+	"updated",
+	"click",
+	"mouseMove",
+	"legendClick",
+	"markerClick",
+	"selection",
+	"dataPointSelection",
+	"dataPointMouseEnter",
+	"dataPointMouseLeave",
+	"beforeZoom",
+	"beforeResetZoom",
+	"zoomed",
+	"scrolled",
+	"scrolled",
+];
+
 const vueApexcharts = defineComponent({
-  name: "apexchart",
-  props: {
-    options: {
-      type: Object
-    },
-    type: {
-      type: String
-    },
-    series: {
-      type: Array,
-      required: true,
-      default: () => []
-    },
-    width: {
-      default: "100%"
-    },
-    height: {
-      default: "auto"
-    }
-  },
-  setup(props, ctx) {
-    const el = ref(null);
-    const chart = ref(null);
+	name: "apexchart",
+	props: {
+		options: {
+			type: Object,
+		},
+		type: {
+			type: String,
+		},
+		series: {
+			type: Array,
+			required: true,
+			default: () => [],
+		},
+		width: {
+			default: "100%",
+		},
+		height: {
+			default: "auto",
+		},
+	},
 
-    const isObject = item => {
-      return item && typeof item === "object" && !Array.isArray(item) && item != null;
-    };
+	// events emitted by this component
+	emits: [...events],
 
-    const extend = (target, source) => {
-      if (typeof Object.assign !== "function") {
-        (function() {
-          Object.assign = function(target) {
-            // We must check against these specific cases.
-            if (target === undefined || target === null) {
-              throw new TypeError("Cannot convert undefined or null to object");
-            }
+	setup(props, { emit }) {
+		const el = ref(null);
+		const chart = ref(null);
 
-            let output = Object(target);
-            for (let index = 1; index < arguments.length; index++) {
-              let source = arguments[index];
-              if (source !== undefined && source !== null) {
-                for (let nextKey in source) {
-                  if (source.hasOwnProperty(nextKey)) {
-                    output[nextKey] = source[nextKey];
-                  }
-                }
-              }
-            }
-            return output;
-          };
-        })();
-      }
+		const isObject = (item) => {
+			return (
+				item && typeof item === "object" && !Array.isArray(item) && item != null
+			);
+		};
 
-      let output = Object.assign({}, target);
-      if (isObject(target) && isObject(source)) {
-        Object.keys(source).forEach(key => {
-          if (isObject(source[key])) {
-            if (!(key in target)) {
-              Object.assign(output, {
-                [key]: source[key]
-              });
-            } else {
-              output[key] = extend(target[key], source[key]);
-            }
-          } else {
-            Object.assign(output, {
-              [key]: source[key]
-            });
-          }
-        });
-      }
-      return output;
-    };
+		const extend = (target, source) => {
+			if (typeof Object.assign !== "function") {
+				(function() {
+					Object.assign = function(target) {
+						// We must check against these specific cases.
+						if (target === undefined || target === null) {
+							throw new TypeError("Cannot convert undefined or null to object");
+						}
 
-    const init = async () => {
-      await nextTick();
+						let output = Object(target);
+						for (let index = 1; index < arguments.length; index++) {
+							let source = arguments[index];
+							if (source !== undefined && source !== null) {
+								for (let nextKey in source) {
+									if (source.hasOwnProperty(nextKey)) {
+										output[nextKey] = source[nextKey];
+									}
+								}
+							}
+						}
+						return output;
+					};
+				})();
+			}
 
-      const newOptions = {
-        chart: {
-          type: props.type || props.options.chart.type || "line",
-          height: props.height,
-          width: props.width,
-          events: {}
-        },
-        series: props.series
-      };
+			let output = Object.assign({}, target);
+			if (isObject(target) && isObject(source)) {
+				Object.keys(source).forEach((key) => {
+					if (isObject(source[key])) {
+						if (!(key in target)) {
+							Object.assign(output, {
+								[key]: source[key],
+							});
+						} else {
+							output[key] = extend(target[key], source[key]);
+						}
+					} else {
+						Object.assign(output, {
+							[key]: source[key],
+						});
+					}
+				});
+			}
+			return output;
+		};
 
-      // Object.keys(ctx.listeners).forEach((evt) => {
-      //     newOptions.chart.value.events[evt] = ctx.listeners[evt];
-      // });
+		const init = async () => {
+			await nextTick();
 
-      const config = extend(props.options, newOptions);
-      chart.value = new ApexCharts(el.value, config);
-      return chart.value.render();
-    };
+			const newOptions = {
+				chart: {
+					type: props.type || props.options.chart.type || "line",
+					height: props.height,
+					width: props.width,
+					events: {},
+				},
+				series: props.series,
+			};
 
-    const refresh = () => {
-      destroy();
-      return init();
-    };
+			// emit events to the parent component
+			// to allow for two-way data binding
+			events.forEach((event) => {
+				let callback = (...args) => emit(event, ...args); // args => chartContext, options
+				newOptions.chart.events[event] = callback;
+			});
 
-    const destroy = () => {
-      chart.value.destroy();
-    };
+			const config = extend(props.options, newOptions);
+			chart.value = new ApexCharts(el.value, config);
+			return chart.value.render();
+		};
 
-    const updateSeries = (newSeries, animate) => {
-      return chart.value.updateSeries(newSeries, animate);
-    };
+		const refresh = () => {
+			destroy();
+			return init();
+		};
 
-    const updateOptions = (newOptions, redrawPaths, animate, updateSyncedCharts) => {
-      return chart.value.updateOptions(newOptions, redrawPaths, animate, updateSyncedCharts);
-    };
+		const destroy = () => {
+			chart.value.destroy();
+		};
 
-    const toggleSeries = seriesName => {
-      return chart.value.toggleSeries(seriesName);
-    };
+		const updateSeries = (newSeries, animate) => {
+			return chart.value.updateSeries(newSeries, animate);
+		};
 
-    const showSeries = seriesName => {
-      chart.value.showSeries(seriesName);
-    };
+		const updateOptions = (
+			newOptions,
+			redrawPaths,
+			animate,
+			updateSyncedCharts
+		) => {
+			return chart.value.updateOptions(
+				newOptions,
+				redrawPaths,
+				animate,
+				updateSyncedCharts
+			);
+		};
 
-    const hideSeries = seriesName => {
-      chart.value.hideSeries(seriesName);
-    };
+		const toggleSeries = (seriesName) => {
+			return chart.value.toggleSeries(seriesName);
+		};
 
-    const appendSeries = (newSeries, animate) => {
-      return chart.value.appendSeries(newSeries, animate);
-    };
+		const showSeries = (seriesName) => {
+			chart.value.showSeries(seriesName);
+		};
 
-    const resetSeries = () => {
-      chart.value.resetSeries();
-    };
+		const hideSeries = (seriesName) => {
+			chart.value.hideSeries(seriesName);
+		};
 
-    const toggleDataPointSelection = (seriesIndex, dataPointIndex) => {
-      chart.value.toggleDataPointSelection(seriesIndex, dataPointIndex);
-    };
+		const appendSeries = (newSeries, animate) => {
+			return chart.value.appendSeries(newSeries, animate);
+		};
 
-    const appendData = newData => {
-      return chart.value.appendData(newData);
-    };
+		const resetSeries = () => {
+			chart.value.resetSeries();
+		};
 
-    const addText = options => {
-      chart.value.addText(options);
-    };
+		const toggleDataPointSelection = (seriesIndex, dataPointIndex) => {
+			chart.value.toggleDataPointSelection(seriesIndex, dataPointIndex);
+		};
 
-    const dataURI = () => {
-      return chart.value.dataURI();
-    };
+		const appendData = (newData) => {
+			return chart.value.appendData(newData);
+		};
 
-    const setLocale = localeName => {
-      return chart.value.setLocale(localeName);
-    };
+		const addText = (options) => {
+			chart.value.addText(options);
+		};
 
-    const addXaxisAnnotation = (options, pushToMemory) => {
-      chart.value.addXaxisAnnotation(options, pushToMemory);
-    };
+		const dataURI = () => {
+			return chart.value.dataURI();
+		};
 
-    const addYaxisAnnotation = (options, pushToMemory) => {
-      chart.value.addYaxisAnnotation(options, pushToMemory);
-    };
+		const setLocale = (localeName) => {
+			return chart.value.setLocale(localeName);
+		};
 
-    const addPointAnnotation = (options, pushToMemory) => {
-      chart.value.addPointAnnotation(options, pushToMemory);
-    };
+		const addXaxisAnnotation = (options, pushToMemory) => {
+			chart.value.addXaxisAnnotation(options, pushToMemory);
+		};
 
-    const removeAnnotation = (id, options) => {
-      chart.value.removeAnnotation(id, options);
-    };
+		const addYaxisAnnotation = (options, pushToMemory) => {
+			chart.value.addYaxisAnnotation(options, pushToMemory);
+		};
 
-    const clearAnnotations = () => {
-      chart.value.clearAnnotations();
-    };
+		const addPointAnnotation = (options, pushToMemory) => {
+			chart.value.addPointAnnotation(options, pushToMemory);
+		};
 
-    onBeforeMount(() => {
-      window.ApexCharts = ApexCharts;
-    });
+		const removeAnnotation = (id, options) => {
+			chart.value.removeAnnotation(id, options);
+		};
 
-    onMounted(() => {
-      init();
-    });
+		const clearAnnotations = () => {
+			chart.value.clearAnnotations();
+		};
 
-    onBeforeUnmount(() => {
-      if (!chart.value) {
-        return;
-      }
-      destroy();
-    });
+		onBeforeMount(() => {
+			window.ApexCharts = ApexCharts;
+		});
 
-    watch(
-      () => props.options,
-      () => {
-        if (!chart.value && props.options) {
-          init();
-        } else {
-          chart.value.updateOptions(props.options);
-        }
-      }
-    );
+		onMounted(() => {
+			init();
+		});
 
-    watch(
-      () => props.series,
-      () => {
-        if (!chart.value && props.series) {
-          init();
-        } else {
-          chart.value.updateSeries(props.series);
-        }
-      }
-    );
+		onBeforeUnmount(() => {
+			if (!chart.value) {
+				return;
+			}
+			destroy();
+		});
 
-    watch(
-      () => props.type,
-      () => {
-        refresh();
-      }
-    );
+		watch(
+			() => props.options,
+			() => {
+				if (!chart.value && props.options) {
+					init();
+				} else {
+					chart.value.updateOptions(props.options);
+				}
+			}
+		);
 
-    watch(
-      () => props.width,
-      () => {
-        refresh();
-      }
-    );
+		watch(
+			() => props.series,
+			() => {
+				if (!chart.value && props.series) {
+					init();
+				} else {
+					chart.value.updateSeries(props.series);
+				}
+			}
+		);
 
-    watch(
-      () => props.height,
-      () => {
-        refresh();
-      }
-    );
+		watch(
+			() => props.type,
+			() => {
+				refresh();
+			}
+		);
 
-    return { el, chart };
-  },
+		watch(
+			() => props.width,
+			() => {
+				refresh();
+			}
+		);
 
-  render() {
-    return h("div", {
-      class: "vue-apexcharts",
-      ref: "el"
-    });
-  }
+		watch(
+			() => props.height,
+			() => {
+				refresh();
+			}
+		);
+
+		return { el, chart };
+	},
+
+	render() {
+		return h("div", {
+			class: "vue-apexcharts",
+			ref: "el",
+		});
+	},
 });
 
 export default vueApexcharts;
