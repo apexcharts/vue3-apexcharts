@@ -46,7 +46,6 @@ const vueApexcharts = defineComponent({
 		series: {
 			type: Array,
 			required: true,
-			default: () => [],
 		},
 		width: {
 			default: "100%",
@@ -262,7 +261,8 @@ const vueApexcharts = defineComponent({
 				} else {
 					chart.value.updateSeries(props.series);
 				}
-			}
+			},
+      { deep: true }
 		);
 
 		watch(

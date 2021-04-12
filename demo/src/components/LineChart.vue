@@ -10,6 +10,8 @@
     ></apexchart>
     <div>
       <button @click="updateChart">Update!</button>
+      <button @click="addSeries">Push series!</button>
+      <button @click="modifySeries">Update first value all series!</button>
     </div>
   </div>
 </template>
@@ -39,11 +41,17 @@ export default {
       series: [
         {
           name: "Series A",
-          data: [30, 40, 45, 50, 49, 60, 70, 91]
+          data: this.generateDayWiseTimeSeries(new Date("11 Feb 2017").getTime(), 20, {
+            min: 10,
+            max: 20
+          })
         },
         {
           name: "Series B",
-          data: [23, 43, 54, 12, 44, 52, 32, 11]
+          data: this.generateDayWiseTimeSeries(new Date("11 Feb 2017").getTime(), 20, {
+            min: 10,
+            max: 20
+          })
         }
       ]
     };
@@ -57,12 +65,13 @@ export default {
         var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
 
         series.push([x, y]);
-        baseval += 86400000;
+        baseval += 86400000 * 7;
         i++;
       }
       return series;
     },
     updateChart() {
+      console.debug("Update chart");
       let series = [
         {
           name: "South",
@@ -75,7 +84,7 @@ export default {
           name: "North",
           data: this.generateDayWiseTimeSeries(new Date("11 Feb 2017").getTime(), 20, {
             min: 10,
-            max: 20
+            max: 50
           })
         },
 
@@ -83,13 +92,30 @@ export default {
           name: "Central",
           data: this.generateDayWiseTimeSeries(new Date("11 Feb 2017").getTime(), 20, {
             min: 10,
-            max: 15
+            max: 50
           })
         }
       ];
 
       this.series = series;
-    }
+    },
+    addSeries() {
+      console.debug('Push new series');
+      this.series.push({
+        name: 'pushedDataSeries',
+        data: this.generateDayWiseTimeSeries(new Date('11 Feb 2017').getTime(), 20, {
+          min: 0,
+          max: 100,
+        }),
+      });
+    },
+    modifySeries() {
+      console.debug('Modify series');
+      this.series.forEach((serie) => {
+        // eslint-disable-next-line no-param-reassign
+        serie.data[0][1] = Math.floor(Math.random() * (40 - 0 + 1)) + 0;
+      });
+    },
   }
 };
 </script>
