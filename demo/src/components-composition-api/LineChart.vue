@@ -7,9 +7,11 @@
       type="line"
       :options="chartOptions"
       :series="series"
-    ></apexchart>
+    />
     <div>
       <button @click="updateChart">Update!</button>
+      <button @click="addSeries">Push series!</button>
+      <button @click="modifySeries">Update first value all series!</button>
     </div>
   </div>
 </template>
@@ -35,16 +37,7 @@ export default defineComponent({
         ],
       },
     });
-    const series = ref([
-      {
-        name: 'Series A',
-        data: [30, 40, 45, 50, 49, 60, 70, 91],
-      },
-      {
-        name: 'Series B',
-        data: [23, 43, 54, 12, 44, 52, 32, 11],
-      },
-    ]);
+
     function generateDayWiseTimeSeries(baseval, count, yrange) {
       let i = 0;
       const newSeries = [];
@@ -60,36 +53,84 @@ export default defineComponent({
       }
       return newSeries;
     }
+    const series = ref([
+      {
+        name: 'Series A',
+        data: generateDayWiseTimeSeries(new Date('11 Feb 2017').getTime(), 20, {
+          min: 10,
+          max: 15,
+        }),
+      },
+      {
+        name: 'Series B',
+        data: generateDayWiseTimeSeries(new Date('11 Feb 2017').getTime(), 20, {
+          min: 10,
+          max: 15,
+        }),
+      },
+    ]);
     function updateChart() {
+      console.debug('Update chart');
       const newSeries = [
         {
           name: 'South',
-          data: generateDayWiseTimeSeries(new Date('11 Feb 2017').getTime(), 20, {
-            min: 10,
-            max: 60,
-          }),
+          data: generateDayWiseTimeSeries(
+            new Date('11 Feb 2017').getTime(),
+            20,
+            {
+              min: 10,
+              max: 60,
+            },
+          ),
         },
         {
           name: 'North',
-          data: generateDayWiseTimeSeries(new Date('11 Feb 2017').getTime(), 20, {
-            min: 10,
-            max: 20,
-          }),
+          data: generateDayWiseTimeSeries(
+            new Date('11 Feb 2017').getTime(),
+            20,
+            {
+              min: 10,
+              max: 20,
+            },
+          ),
         },
 
         {
           name: 'Central',
-          data: generateDayWiseTimeSeries(new Date('11 Feb 2017').getTime(), 20, {
-            min: 10,
-            max: 15,
-          }),
+          data: generateDayWiseTimeSeries(
+            new Date('11 Feb 2017').getTime(),
+            20,
+            {
+              min: 10,
+              max: 15,
+            },
+          ),
         },
       ];
 
       series.value = newSeries;
     }
 
-    return { chartOptions, series, updateChart };
+    function addSeries() {
+      console.debug('Push new series');
+      series.value.push({
+        name: 'Central23',
+        data: generateDayWiseTimeSeries(new Date('11 Feb 2017').getTime(), 20, {
+          min: 0,
+          max: 20,
+        }),
+      });
+    }
+
+    function modifySeries() {
+      console.debug('Modify series');
+      series.value.forEach((serie) => {
+        // eslint-disable-next-line no-param-reassign
+        serie.data[0][1] = Math.floor(Math.random() * (40 - 0 + 1)) + 0;
+      });
+    }
+
+    return { chartOptions, series, updateChart, addSeries, modifySeries };
   },
 });
 </script>
