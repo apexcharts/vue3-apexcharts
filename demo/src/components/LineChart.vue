@@ -1,5 +1,6 @@
 <template>
   <div class="example">
+    <h4>Options API Line chart</h4>
     <apexchart
       width="500"
       height="350"

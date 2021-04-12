@@ -8,6 +8,7 @@ import {
 	watch,
 	onBeforeMount,
 	nextTick,
+  toRefs,
 } from "vue";
 import ApexCharts from "apexcharts";
 
@@ -241,8 +242,9 @@ const vueApexcharts = defineComponent({
 			destroy();
 		});
 
+    const reactiveProps = toRefs(props);
 		watch(
-			() => props.options,
+			reactiveProps.options,
 			() => {
 				if (!chart.value && props.options) {
 					init();
@@ -253,7 +255,7 @@ const vueApexcharts = defineComponent({
 		);
 
 		watch(
-			() => props.series,
+			reactiveProps.series,
 			() => {
 				if (!chart.value && props.series) {
 					init();
@@ -264,21 +266,21 @@ const vueApexcharts = defineComponent({
 		);
 
 		watch(
-			() => props.type,
+			reactiveProps.type,
 			() => {
 				refresh();
 			}
 		);
 
 		watch(
-			() => props.width,
+			reactiveProps.width,
 			() => {
 				refresh();
 			}
 		);
 
 		watch(
-			() => props.height,
+			reactiveProps.height,
 			() => {
 				refresh();
 			}
