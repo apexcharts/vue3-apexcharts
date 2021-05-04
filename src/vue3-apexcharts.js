@@ -187,10 +187,6 @@ const vueApexcharts = defineComponent({
       return chart.value.zoomX(start, end);
     };
 
-    const addText = options => {
-      chart.value.addText(options);
-    };
-
     const dataURI = () => {
       return chart.value.dataURI();
     };
@@ -282,7 +278,6 @@ const vueApexcharts = defineComponent({
       zoomX,
       toggleDataPointSelection,
       appendData,
-      addText,
       appendSeries,
       addXaxisAnnotation,
       addYaxisAnnotation,

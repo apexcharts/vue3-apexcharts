@@ -23,7 +23,6 @@ export interface VueApexChartsComponent extends ComponentPublicInstance {
   zoomX(min: number, max: number): void;
   toggleDataPointSelection(seriesIndex: number, dataPointIndex?: number): any;
   appendData(newData: any): Promise<void>;
-  addText(text: string): void;
   appendSeries(newSeries: any, animate?: boolean): Promise<void>;
   addXaxisAnnotation(options: any, pushToMemory?: boolean, context?: any): void;
   addYaxisAnnotation(options: any, pushToMemory?: boolean, context?: any): void;
