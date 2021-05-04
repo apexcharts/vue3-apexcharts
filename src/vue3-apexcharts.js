@@ -282,6 +282,7 @@ const vueApexcharts = defineComponent({
       zoomX,
       toggleDataPointSelection,
       appendData,
+      addText,
       appendSeries,
       addXaxisAnnotation,
       addYaxisAnnotation,
