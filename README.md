@@ -47,6 +47,21 @@ export default {
 };
 ```
 
+To provide a `$apexcharts` reference inside Vue instance
+
+```ts
+import ApexCharts from 'apexcharts';
+
+app.config.globalProperties.$apexcharts = ApexCharts;
+
+// Add this when into a TypeScript codebase
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    $apexcharts: typeof ApexCharts;
+  }
+}
+```
+
 To create a basic bar chart with minimal configuration, write as follows:
 
 ```vue
