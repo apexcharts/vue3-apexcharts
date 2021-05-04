@@ -3,6 +3,7 @@ import {
   h,
   defineComponent,
   ref,
+  getCurrentInstance,
   onMounted,
   onBeforeUnmount,
   watch,
@@ -56,10 +57,10 @@ const vueApexcharts = defineComponent({
   },
 
   // events emitted by this component
-  emits: [...events],
+  emits: events,
 
   setup(props, { emit }) {
-    const el = ref(null);
+    const __el = ref(null);
     const chart = ref(null);
 
     const isObject = item => {
@@ -133,7 +134,7 @@ const vueApexcharts = defineComponent({
       });
 
       const config = extend(props.options, newOptions);
-      chart.value = new ApexCharts(el.value, config);
+      chart.value = new ApexCharts(__el.value, config);
       return chart.value.render();
     };
 
@@ -182,6 +183,10 @@ const vueApexcharts = defineComponent({
       return chart.value.appendData(newData);
     };
 
+    const zoomX = (start, end) => {
+      return chart.value.zoomX(start, end);
+    };
+
     const addText = options => {
       chart.value.addText(options);
     };
@@ -219,6 +224,7 @@ const vueApexcharts = defineComponent({
     });
 
     onMounted(() => {
+      __el.value = getCurrentInstance().proxy.$el;
       init();
     });
 
@@ -262,13 +268,33 @@ const vueApexcharts = defineComponent({
       refresh();
     });
 
-    return { el, chart };
+    return {
+      chart,
+      init,
+      refresh,
+      destroy,
+      updateOptions,
+      updateSeries,
+      toggleSeries,
+      showSeries,
+      hideSeries,
+      resetSeries,
+      zoomX,
+      toggleDataPointSelection,
+      appendData,
+      appendSeries,
+      addXaxisAnnotation,
+      addYaxisAnnotation,
+      addPointAnnotation,
+      removeAnnotation,
+      clearAnnotations,
+      dataURI
+    };
   },
 
   render() {
     return h("div", {
       class: "vue-apexcharts",
-      ref: "el"
     });
   }
 });
