@@ -1,8 +1,7 @@
-import Vue, { Component, ComponentOptions } from 'vue';
-import { PluginObject } from 'vue/types/plugin';
 import ApexCharts, { ApexOptions } from 'apexcharts';
+import { Component, ComponentOptions, ComponentPublicInstance, Plugin } from 'vue';
 
-interface VueApexChartsComponent extends Vue {
+export interface VueApexChartsComponent extends ComponentPublicInstance {
   // data
   readonly chart?: ApexCharts;
   // props
@@ -33,12 +32,6 @@ interface VueApexChartsComponent extends Vue {
   dataURI(): Promise<string>;
 }
 
-declare const VueApexCharts: Component & ComponentOptions<Vue> & PluginObject<any>;
+declare const VueApexCharts: Component & ComponentOptions<VueApexChartsComponent> & Plugin;
 
 export default VueApexCharts;
-
-declare module 'vue/types/vue' {
-  interface Vue {
-    $apexcharts: typeof ApexCharts;
-  }
-}
