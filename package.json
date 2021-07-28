@@ -1,6 +1,6 @@
 {
   "name": "vue3-apexcharts",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "main": "./dist/vue3-apexcharts.common.js",
   "private": false,
   "scripts": {
