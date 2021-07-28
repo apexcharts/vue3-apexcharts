@@ -1,12 +1,26 @@
-import ApexCharts, { ApexOptions } from 'apexcharts';
-import { Component, ComponentOptions, ComponentPublicInstance, Plugin } from 'vue';
+import ApexCharts, { ApexOptions } from "apexcharts";
+import { Component, ComponentOptions, ComponentPublicInstance, Plugin } from "vue";
 
 export interface VueApexChartsComponent extends ComponentPublicInstance {
   // data
   readonly chart?: ApexCharts;
   // props
   options?: ApexOptions;
-  type?: 'line' | 'area' | 'bar' | 'histogram' | 'pie' | 'donut' | 'radialBar' | 'rangeBar' | 'scatter' | 'bubble' | 'heatmap' | 'candlestick' | 'radar' | 'polarArea';
+  type?:
+    | "line"
+    | "area"
+    | "bar"
+    | "histogram"
+    | "pie"
+    | "donut"
+    | "radialBar"
+    | "rangeBar"
+    | "scatter"
+    | "bubble"
+    | "heatmap"
+    | "candlestick"
+    | "radar"
+    | "polarArea";
   series: any;
   width?: string | number;
   height?: string | number;
@@ -14,7 +28,12 @@ export interface VueApexChartsComponent extends ComponentPublicInstance {
   init(): Promise<void>;
   refresh(): Promise<void>;
   destroy(): void;
-  updateOptions(options: any, redrawPaths?: boolean, animate?: boolean, updateSyncedCharts?: boolean): Promise<void>;
+  updateOptions(
+    options: any,
+    redrawPaths?: boolean,
+    animate?: boolean,
+    updateSyncedCharts?: boolean
+  ): Promise<void>;
   updateSeries(newSeries: any, animate?: boolean): Promise<void>;
   toggleSeries(seriesName: string): any;
   showSeries(seriesName: string): void;
@@ -29,7 +48,7 @@ export interface VueApexChartsComponent extends ComponentPublicInstance {
   addPointAnnotation(options: any, pushToMemory?: boolean, context?: any): void;
   removeAnnotation(id: string, options?: any): void;
   clearAnnotations(): void;
-  dataURI(): Promise<string>;
+  dataURI(options?: { scale?: number; width?: number }): Promise<void>;
 }
 
 declare const VueApexCharts: Component & ComponentOptions<VueApexChartsComponent> & Plugin;
