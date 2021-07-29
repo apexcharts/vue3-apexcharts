@@ -22,6 +22,7 @@ const events = [
   "updated",
   "click",
   "mouseMove",
+  "mouseLeave",
   "legendClick",
   "markerClick",
   "selection",
@@ -32,7 +33,7 @@ const events = [
   "beforeResetZoom",
   "zoomed",
   "scrolled",
-  "scrolled"
+  "brushScrolled"
 ];
 
 const vueApexcharts = defineComponent({
@@ -187,8 +188,8 @@ const vueApexcharts = defineComponent({
       return chart.value.zoomX(start, end);
     };
 
-    const dataURI = () => {
-      return chart.value.dataURI();
+    const dataURI = options => {
+      return chart.value.dataURI(options);
     };
 
     const setLocale = localeName => {
@@ -284,13 +285,14 @@ const vueApexcharts = defineComponent({
       addPointAnnotation,
       removeAnnotation,
       clearAnnotations,
+      setLocale,
       dataURI
     };
   },
 
   render() {
     return h("div", {
-      class: "vue-apexcharts",
+      class: "vue-apexcharts"
     });
   }
 });
