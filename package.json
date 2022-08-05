@@ -1,6 +1,6 @@
 {
-  "name": "@gabrielm0/vue3-apexcharts",
-  "version": "0.0.1",
+  "name": "vue3-apexcharts",
+  "version": "1.4.3",
   "main": "./dist/vue3-apexcharts.common.js",
   "private": false,
   "scripts": {
