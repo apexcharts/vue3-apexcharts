@@ -1,6 +1,6 @@
 {
-  "name": "vue3-apexcharts",
-  "version": "1.4.2",
+  "name": "@gabrielm0/vue3-apexcharts",
+  "version": "0.0.1",
   "main": "./dist/vue3-apexcharts.common.js",
   "private": false,
   "scripts": {
@@ -44,7 +44,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^7.0.0-0",
-    "apexcharts": "^3.26.1",
+    "apexcharts": "^3.35.4",
     "typescript": "~3.9.3",
     "vue": "^3.0.0",
     "copyfiles": "2.4.0",
