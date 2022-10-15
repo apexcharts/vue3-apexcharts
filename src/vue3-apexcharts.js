@@ -116,6 +116,10 @@ const vueApexcharts = defineComponent({
 
     const init = async () => {
       await nextTick();
+      
+      if (chart.value) {
+			  return;
+      }
 
       const newOptions = {
         chart: {
