@@ -15,10 +15,10 @@
 
   "scripts": {
     "dev": "vite",
-    "build": "vite build && vue-tsc --emitDeclarationOnly",
+    "build": "vite build",
     "types": "vue-tsc ",
     "preview": "vite preview",
-    "prepare": "vite build && vue-tsc --emitDeclarationOnly"
+    "prepare": "vite build"
   },
 
   "typings": "./typings/vue-apexcharts.d.ts",
