@@ -17,9 +17,9 @@
     "dev": "vite",
     "build": "vite build && vue-tsc --emitDeclarationOnly",
     "types": "vue-tsc ",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "vite build && vue-tsc --emitDeclarationOnly"
   },
-
 
   "typings": "./typings/vue-apexcharts.d.ts",
   "author": "Juned Chhipa",
