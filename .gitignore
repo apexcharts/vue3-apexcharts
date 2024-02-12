@@ -1,11 +1,5 @@
 .DS_Store
 node_modules
-dist/
-dist/vue3-apexcharts.common.js.map
-dist/vue3-apexcharts.umd.js
-dist/vue3-apexcharts.umd.js.map
-dist/vue3-apexcharts.umd.min.js
-dist/vue3-apexcharts.umd.min.js.map
 demo/node_modules
 
 # local env files
