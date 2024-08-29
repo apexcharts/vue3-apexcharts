@@ -1,7 +1,7 @@
 {
   "name": "vue3-apexcharts",
   "type": "module",
-  "version": "1.5.3",
+  "version": "1.6.0",
   "main": "./dist/vue3-apexcharts.umd.cjs",
   "module": "./dist/vue3-apexcharts.js",
   "private": false,
