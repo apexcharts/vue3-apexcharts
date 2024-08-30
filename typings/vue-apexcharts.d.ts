@@ -36,6 +36,7 @@ export interface VueApexChartsComponent extends ComponentPublicInstance {
   ): Promise<void>;
   updateSeries(newSeries: any, animate?: boolean): Promise<void>;
   toggleSeries(seriesName: string): any;
+  highlightSeries(seriesName: string): any;
   showSeries(seriesName: string): void;
   hideSeries(seriesName: string): void;
   resetSeries(): void;
