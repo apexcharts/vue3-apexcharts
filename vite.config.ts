@@ -8,7 +8,7 @@ export default defineConfig({
   build: {
     lib: {
       // src/indext.ts is where we have exported the component(s)
-      entry: resolve(__dirname, "src/index.js"),
+      entry: resolve(__dirname, "src/index.ts"),
       name: "VueApexCharts",
       // the name of the output files when the build is run
       fileName: "vue3-apexcharts",
