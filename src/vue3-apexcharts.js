@@ -9,7 +9,7 @@ import {
   watch,
   onBeforeMount,
   nextTick,
-  toRefs
+  toRefs,
 } from "vue";
 import ApexCharts from "apexcharts";
 
@@ -33,28 +33,28 @@ const events = [
   "beforeResetZoom",
   "zoomed",
   "scrolled",
-  "brushScrolled"
+  "brushScrolled",
 ];
 
 const vueApexcharts = defineComponent({
   name: "apexchart",
   props: {
     options: {
-      type: Object
+      type: Object,
     },
     type: {
-      type: String
+      type: String,
     },
     series: {
       type: Array,
-      required: true
+      required: true,
     },
     width: {
-      default: "100%"
+      default: "100%",
     },
     height: {
-      default: "auto"
-    }
+      default: "auto",
+    },
   },
 
   // events emitted by this component
@@ -64,14 +64,14 @@ const vueApexcharts = defineComponent({
     const __el = ref(null);
     const chart = ref(null);
 
-    const isObject = item => {
+    const isObject = (item) => {
       return item && typeof item === "object" && !Array.isArray(item) && item != null;
     };
 
     const extend = (target, source) => {
       if (typeof Object.assign !== "function") {
-        (function() {
-          Object.assign = function(target) {
+        (function () {
+          Object.assign = function (target) {
             // We must check against these specific cases.
             if (target === undefined || target === null) {
               throw new TypeError("Cannot convert undefined or null to object");
@@ -95,18 +95,18 @@ const vueApexcharts = defineComponent({
 
       let output = Object.assign({}, target);
       if (isObject(target) && isObject(source)) {
-        Object.keys(source).forEach(key => {
+        Object.keys(source).forEach((key) => {
           if (isObject(source[key])) {
             if (!(key in target)) {
               Object.assign(output, {
-                [key]: source[key]
+                [key]: source[key],
               });
             } else {
               output[key] = extend(target[key], source[key]);
             }
           } else {
             Object.assign(output, {
-              [key]: source[key]
+              [key]: source[key],
             });
           }
         });
@@ -116,9 +116,9 @@ const vueApexcharts = defineComponent({
 
     const init = async () => {
       await nextTick();
-      
+
       if (chart.value) {
-			  return;
+        return;
       }
 
       const newOptions = {
@@ -126,16 +126,16 @@ const vueApexcharts = defineComponent({
           type: props.type || props.options.chart.type || "line",
           height: props.height,
           width: props.width,
-          events: {}
+          events: {},
         },
-        series: props.series
+        series: props.series,
       };
 
       // emit events to the parent component
       // to allow for two-way data binding, while
       // also allowing chart options to define callbacks
-      const optionsEvents = props.options.chart.events;
-      events.forEach(event => {
+      const optionsEvents = props.options.chart?.events;
+      events.forEach((event) => {
         let callback = (...args) => emit(event, ...args); // args => chartContext, options
         newOptions.chart.events[event] = (...args) => {
           callback(...args);
@@ -167,15 +167,15 @@ const vueApexcharts = defineComponent({
       return chart.value.updateOptions(newOptions, redrawPaths, animate, updateSyncedCharts);
     };
 
-    const toggleSeries = seriesName => {
+    const toggleSeries = (seriesName) => {
       return chart.value.toggleSeries(seriesName);
     };
 
-    const showSeries = seriesName => {
+    const showSeries = (seriesName) => {
       chart.value.showSeries(seriesName);
     };
 
-    const hideSeries = seriesName => {
+    const hideSeries = (seriesName) => {
       chart.value.hideSeries(seriesName);
     };
 
@@ -191,7 +191,7 @@ const vueApexcharts = defineComponent({
       chart.value.toggleDataPointSelection(seriesIndex, dataPointIndex);
     };
 
-    const appendData = newData => {
+    const appendData = (newData) => {
       return chart.value.appendData(newData);
     };
 
@@ -199,11 +199,11 @@ const vueApexcharts = defineComponent({
       return chart.value.zoomX(start, end);
     };
 
-    const dataURI = options => {
+    const dataURI = (options) => {
       return chart.value.dataURI(options);
     };
 
-    const setLocale = localeName => {
+    const setLocale = (localeName) => {
       return chart.value.setLocale(localeName);
     };
 
@@ -297,15 +297,15 @@ const vueApexcharts = defineComponent({
       removeAnnotation,
       clearAnnotations,
       setLocale,
-      dataURI
+      dataURI,
     };
   },
 
   render() {
     return h("div", {
-      class: "vue-apexcharts"
+      class: "vue-apexcharts",
     });
-  }
+  },
 });
 
 export default vueApexcharts;
