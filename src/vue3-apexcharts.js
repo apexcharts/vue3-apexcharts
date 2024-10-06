@@ -134,7 +134,7 @@ const vueApexcharts = defineComponent({
       // emit events to the parent component
       // to allow for two-way data binding, while
       // also allowing chart options to define callbacks
-      const optionsEvents = props.options.chart?.events;
+      const optionsEvents = props.options.chart ? props.options.chart.events : null;
       events.forEach((event) => {
         let callback = (...args) => emit(event, ...args); // args => chartContext, options
         newOptions.chart.events[event] = (...args) => {

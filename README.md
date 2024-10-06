@@ -50,12 +50,12 @@ export default {
 To provide a `$apexcharts` reference inside Vue instance
 
 ```ts
-import ApexCharts from 'apexcharts';
+import ApexCharts from "apexcharts";
 
 app.config.globalProperties.$apexcharts = ApexCharts;
 
 // Add this when into a TypeScript codebase
-declare module '@vue/runtime-core' {
+declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
     $apexcharts: typeof ApexCharts;
   }
@@ -79,7 +79,7 @@ To create a basic bar chart with minimal configuration, write as follows:
 
 ```js
 export default {
-  data: function() {
+  data: function () {
     return {
       chartOptions: {
         chart: {
@@ -128,7 +128,7 @@ Simple! Just change the `series` or any `option` and it will automatically re-re
 
 ```js
 export default {
-  data: function() {
+  data: function () {
     return {
       chartOptions: {
         chart: {

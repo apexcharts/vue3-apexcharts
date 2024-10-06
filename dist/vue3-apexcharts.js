@@ -76,7 +76,7 @@ const A = [
           events: {}
         },
         series: a.series
-      }, t = a.options.chart.events;
+      }, t = a.options.chart ? a.options.chart.events : null;
       A.forEach((o) => {
         let v = (...i) => x(o, ...i);
         e.chart.events[o] = (...i) => {
