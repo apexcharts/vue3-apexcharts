@@ -157,6 +157,7 @@ const vueApexcharts = defineComponent({
 
     const destroy = () => {
       chart.value.destroy();
+      chart.value = null;
     };
 
     const updateSeries = (newSeries, animate) => {
