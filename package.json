@@ -43,7 +43,7 @@
   },
   "peerDependencies": {
     "vue": "> 3.0.0",
-    "apexcharts": "> 3.0.0"
+    "apexcharts": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.2.5",
