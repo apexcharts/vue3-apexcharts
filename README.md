@@ -1,7 +1,6 @@
 <p align="center"><img src="https://apexcharts.com/media/vue-apexcharts.png"></p>
 
 <p align="center">
-  <a href="https://github.com/apexcharts/vue3-apexcharts/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="License"></a>
   <a href="https://travis-ci.com/apexcharts/vue3-apexcharts"><img src="https://api.travis-ci.com/apexcharts/vue3-apexcharts.svg?branch=master" alt="build" /></a>
   <a href="https://www.npmjs.com/package/vue3-apexcharts"><img src="https://img.shields.io/npm/v/vue3-apexcharts.svg" alt="ver"></a>
 </p>
@@ -271,7 +270,3 @@ yarn install
 ```bash
 yarn build
 ```
-
-## License
-
-Vue3-ApexCharts is released under MIT license. You are free to use, modify and distribute this software, as long as the copyright header is left intact.
