@@ -42,7 +42,7 @@ const A = [
   // events emitted by this component
   emits: A,
   setup(a, { emit: x }) {
-    const g = b(null), n = b(null), f = (e) => e && typeof e == "object" && !Array.isArray(e) && e != null, S = (e, t) => {
+    const g = b(null), t = b(null), f = (e) => e && typeof e == "object" && !Array.isArray(e) && e != null, S = (e, n) => {
       typeof Object.assign != "function" && function() {
         Object.assign = function(o) {
           if (o == null)
@@ -58,15 +58,15 @@ const A = [
         };
       }();
       let s = Object.assign({}, e);
-      return f(e) && f(t) && Object.keys(t).forEach((o) => {
-        f(t[o]) ? o in e ? s[o] = S(e[o], t[o]) : Object.assign(s, {
-          [o]: t[o]
+      return f(e) && f(n) && Object.keys(n).forEach((o) => {
+        f(n[o]) ? o in e ? s[o] = S(e[o], n[o]) : Object.assign(s, {
+          [o]: n[o]
         }) : Object.assign(s, {
-          [o]: t[o]
+          [o]: n[o]
         });
       }), s;
     }, r = async () => {
-      if (await H(), n.value)
+      if (await H(), t.value)
         return;
       const e = {
         chart: {
@@ -76,50 +76,50 @@ const A = [
           events: {}
         },
         series: a.series
-      }, t = a.options.chart ? a.options.chart.events : null;
+      }, n = a.options.chart ? a.options.chart.events : null;
       A.forEach((o) => {
         let v = (...i) => x(o, ...i);
         e.chart.events[o] = (...i) => {
-          v(...i), t && t.hasOwnProperty(o) && t[o](...i);
+          v(...i), n && n.hasOwnProperty(o) && n[o](...i);
         };
       });
       const s = S(a.options, e);
-      return n.value = new w(g.value, s), n.value.render();
+      return t.value = new w(g.value, s), t.value.render();
     }, d = () => (h(), r()), h = () => {
-      n.value.destroy();
-    }, O = (e, t) => n.value.updateSeries(e, t), y = (e, t, s, o) => n.value.updateOptions(e, t, s, o), j = (e) => n.value.toggleSeries(e), P = (e) => {
-      n.value.showSeries(e);
+      t.value.destroy(), t.value = null;
+    }, O = (e, n) => t.value.updateSeries(e, n), y = (e, n, s, o) => t.value.updateOptions(e, n, s, o), j = (e) => t.value.toggleSeries(e), P = (e) => {
+      t.value.showSeries(e);
     }, C = (e) => {
-      n.value.hideSeries(e);
-    }, E = (e, t) => n.value.appendSeries(e, t), M = () => {
-      n.value.resetSeries();
-    }, D = (e, t) => {
-      n.value.toggleDataPointSelection(e, t);
-    }, L = (e) => n.value.appendData(e), R = (e, t) => n.value.zoomX(e, t), X = (e) => n.value.dataURI(e), z = (e) => n.value.setLocale(e), I = (e, t) => {
-      n.value.addXaxisAnnotation(e, t);
-    }, U = (e, t) => {
-      n.value.addYaxisAnnotation(e, t);
-    }, B = (e, t) => {
-      n.value.addPointAnnotation(e, t);
-    }, T = (e, t) => {
-      n.value.removeAnnotation(e, t);
+      t.value.hideSeries(e);
+    }, E = (e, n) => t.value.appendSeries(e, n), M = () => {
+      t.value.resetSeries();
+    }, D = (e, n) => {
+      t.value.toggleDataPointSelection(e, n);
+    }, L = (e) => t.value.appendData(e), R = (e, n) => t.value.zoomX(e, n), X = (e) => t.value.dataURI(e), z = (e) => t.value.setLocale(e), I = (e, n) => {
+      t.value.addXaxisAnnotation(e, n);
+    }, U = (e, n) => {
+      t.value.addYaxisAnnotation(e, n);
+    }, B = (e, n) => {
+      t.value.addPointAnnotation(e, n);
+    }, T = (e, n) => {
+      t.value.removeAnnotation(e, n);
     }, Y = () => {
-      n.value.clearAnnotations();
+      t.value.clearAnnotations();
     };
     _(() => {
       window.ApexCharts = w;
     }), q(() => {
       g.value = K().proxy.$el, r();
     }), $(() => {
-      n.value && h();
+      t.value && h();
     });
     const u = F(a);
     return c(u.options, () => {
-      !n.value && a.options ? r() : n.value.updateOptions(a.options);
+      !t.value && a.options ? r() : t.value.updateOptions(a.options);
     }), c(
       u.series,
       () => {
-        !n.value && a.series ? r() : n.value.updateSeries(a.series);
+        !t.value && a.series ? r() : t.value.updateSeries(a.series);
       },
       { deep: !0 }
     ), c(u.type, () => {
@@ -129,7 +129,7 @@ const A = [
     }), c(u.height, () => {
       d();
     }), {
-      chart: n,
+      chart: t,
       init: r,
       refresh: d,
       destroy: h,

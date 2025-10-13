@@ -1,7 +1,7 @@
 import ApexCharts, { ApexOptions } from "apexcharts";
-import { Component, ComponentOptions, ComponentPublicInstance, Plugin } from "vue";
+import { DefineComponent, Plugin } from "vue";
 
-export interface VueApexChartsComponent extends ComponentPublicInstance {
+export interface VueApexChartsComponent {
   // data
   readonly chart?: ApexCharts;
   // props
@@ -52,6 +52,8 @@ export interface VueApexChartsComponent extends ComponentPublicInstance {
   dataURI(options?: { scale?: number; width?: number }): Promise<void>;
 }
 
-declare const VueApexCharts: Component & ComponentOptions<VueApexChartsComponent> & Plugin;
+type VueApexChartsComponentType = DefineComponent<VueApexChartsComponent>;
+
+declare const VueApexCharts: VueApexChartsComponentType & Plugin;
 
 export default VueApexCharts;
