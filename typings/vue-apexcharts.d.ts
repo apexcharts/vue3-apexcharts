@@ -1,7 +1,7 @@
 import ApexCharts, { ApexOptions } from "apexcharts";
 import { DefineComponent, Plugin } from "vue";
 
-export interface VueApexChartsComponent {
+export interface VueApexChartsComponentProps {
   // data
   readonly chart?: ApexCharts;
   // props
@@ -24,7 +24,9 @@ export interface VueApexChartsComponent {
   series: any;
   width?: string | number;
   height?: string | number;
-  // method
+}
+
+export interface VueApexChartsComponentMethods {
   init(): Promise<void>;
   refresh(): Promise<void>;
   destroy(): void;
@@ -52,7 +54,7 @@ export interface VueApexChartsComponent {
   dataURI(options?: { scale?: number; width?: number }): Promise<void>;
 }
 
-type VueApexChartsComponentType = DefineComponent<VueApexChartsComponent>;
+type VueApexChartsComponentType = DefineComponent<VueApexChartsComponentProps, VueApexChartsComponentMethods>;
 
 declare const VueApexCharts: VueApexChartsComponentType & Plugin;
 
