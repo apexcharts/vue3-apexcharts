@@ -209,7 +209,7 @@ const C = [
     const s = w("");
     return W(async () => {
       try {
-        const { default: r } = await import("./apexcharts.ssr.esm-142aa21d.js"), n = Object.assign({}, t.options, {
+        const { default: r } = await import("./apexcharts.ssr.esm-fe46cd2d.js"), n = Object.assign({}, t.options, {
           chart: Object.assign({}, t.options.chart, {
             type: t.type,
             width: t.width,
@@ -251,7 +251,7 @@ const M = /* @__PURE__ */ oe(ae, [["render", se]]), P = A({
     let s = [];
     L(async () => {
       try {
-        const { default: r } = await import("./apexcharts.ssr.esm-142aa21d.js");
+        const { default: r } = await import("./apexcharts.ssr.esm-fe46cd2d.js");
         s = r.hydrateAll(t.selector, t.clientOptions);
       } catch (r) {
         console.error("Failed to hydrate ApexCharts:", r);

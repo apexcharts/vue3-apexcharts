@@ -22,7 +22,7 @@ var De = Object.defineProperty, Te = Object.defineProperties, Me = Object.getOwn
   r((e = e.apply(A, t)).next());
 });
 /*!
- * ApexCharts v5.8.2-beta.1
+ * ApexCharts v5.10.0
  * (c) 2018-2026 ApexCharts
  */
 class B {
@@ -8442,7 +8442,8 @@ function Q(A) {
   const t = xe[A];
   if (!t)
     throw new Error(
-      `ApexCharts: chart type "${A}" is not registered. Import it via ApexCharts.use() or use the full apexcharts bundle.`
+      `ApexCharts: chart type "${A}" is not registered. Import it via ApexCharts.use() or use the full apexcharts bundle.
+If you already imported the entry (e.g. 'apexcharts/${A}'), your bundler may have created two separate copies of the ApexCharts module so the registration was lost. Add all apexcharts sub-entries to your bundler's deduplication config — for Vite add them to optimizeDeps.include in vite.config.`
     );
   return t;
 }

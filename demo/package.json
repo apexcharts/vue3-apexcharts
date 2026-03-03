@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "apexcharts": "^5.9.0",
+    "apexcharts": "^5.10.0",
     "vue": "^3.5.0",
     "vue-router": "^4.4.0"
   },

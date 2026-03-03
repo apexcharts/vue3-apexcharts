@@ -1,7 +1,7 @@
 {
   "name": "vue3-apexcharts",
   "type": "module",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "main": "./dist/vue3-apexcharts.umd.cjs",
   "module": "./dist/vue3-apexcharts.js",
   "private": false,
@@ -52,7 +52,7 @@
     "url": "git+https://github.com/apexcharts/vue3-apexcharts.git"
   },
   "peerDependencies": {
-    "apexcharts": ">=5.9.0",
+    "apexcharts": ">=5.10.0",
     "vue": ">=3.0.0"
   },
   "peerDependenciesMeta": {
@@ -66,7 +66,7 @@
     "@vitest/coverage-v8": "^1.6.0",
     "@vitest/ui": "^1.6.0",
     "@vue/test-utils": "^2.4.6",
-    "apexcharts": "^5.9.0",
+    "apexcharts": "^5.10.0",
     "copyfiles": "2.4.0",
     "happy-dom": "^14.12.0",
     "jsdom": "^24.1.0",

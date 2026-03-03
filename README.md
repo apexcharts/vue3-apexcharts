@@ -256,9 +256,11 @@ The default entry (`vue3-apexcharts`) bundles the full ApexCharts library. If yo
 ```js
 import VueApexCharts from "vue3-apexcharts/core";
 
-// Import only the chart types you need
-import "apexcharts/bar";
+// Import by the exact chart type name you use in :type or chart.type
 import "apexcharts/line";
+import "apexcharts/bar";
+import "apexcharts/donut";
+import "apexcharts/treemap";
 
 // Import only the features you need
 import "apexcharts/features/legend";
@@ -268,9 +270,32 @@ const app = createApp(App);
 app.use(VueApexCharts);
 ```
 
-The core entry imports ApexCharts from `apexcharts/core`, which is the bare class with only tooltip included. You must explicitly import the chart types and optional features your app uses:
+The core entry imports ApexCharts from `apexcharts/core`, which is the bare class with only tooltip included. You must explicitly import the chart types and optional features your app uses.
 
-**Chart types:** `apexcharts/line`, `apexcharts/bar`, `apexcharts/pie`, `apexcharts/heatmap`, `apexcharts/candlestick`, `apexcharts/radial`, etc.
+Each chart type has its own import that matches the type name you pass to the component — no need to know which internal module it maps to:
+
+**Chart types:**
+
+| Import | type string |
+|--------|-------------|
+| `apexcharts/line` | `"line"` |
+| `apexcharts/area` | `"area"` |
+| `apexcharts/scatter` | `"scatter"` |
+| `apexcharts/bubble` | `"bubble"` |
+| `apexcharts/rangeArea` | `"rangeArea"` |
+| `apexcharts/bar` | `"bar"` |
+| `apexcharts/column` | `"column"` |
+| `apexcharts/barStacked` | `"barStacked"` |
+| `apexcharts/rangeBar` | `"rangeBar"` |
+| `apexcharts/pie` | `"pie"` |
+| `apexcharts/donut` | `"donut"` |
+| `apexcharts/polarArea` | `"polarArea"` |
+| `apexcharts/radialBar` | `"radialBar"` |
+| `apexcharts/radar` | `"radar"` |
+| `apexcharts/candlestick` | `"candlestick"` |
+| `apexcharts/boxPlot` | `"boxPlot"` |
+| `apexcharts/heatmap` | `"heatmap"` |
+| `apexcharts/treemap` | `"treemap"` |
 
 **Optional features:**
 | Import | Description |
@@ -282,6 +307,28 @@ The core entry imports ApexCharts from `apexcharts/core`, which is the bare clas
 | `apexcharts/features/keyboard` | Keyboard navigation & accessibility |
 
 > **Note:** Tree-shaking requires ApexCharts v5.8.1+.
+
+### Vite: preventing "chart type X is not registered" errors
+
+Vite's dependency pre-bundler can create two separate copies of the ApexCharts module — one for `apexcharts/core` and separate ones for each sub-entry — causing registrations to be lost. If you see this error even though you have the correct imports, add your apexcharts entries to `optimizeDeps.include`:
+
+```js
+// vite.config.js
+export default {
+  optimizeDeps: {
+    include: [
+      'apexcharts/core',
+      'apexcharts/line',
+      'apexcharts/bar',
+      // ...all apexcharts/* entries you import
+      'apexcharts/features/legend',
+      'apexcharts/features/toolbar',
+    ],
+  },
+}
+```
+
+This forces Vite to pre-bundle all sub-entries together so they share a single ApexCharts instance and all registrations are preserved.
 
 ## Server-Side Rendering (SSR)
 
