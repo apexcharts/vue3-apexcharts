@@ -1,43 +1,20 @@
 <template>
   <div>
     <div class="header">
-      <h1>Vue3 Apexcharts</h1>
-      <h3></h3>
+      <h1>Vue3 ApexCharts</h1>
+      <nav class="nav">
+        <router-link to="/">Examples</router-link>
+        <router-link to="/tree-shaking">Tree-Shaking</router-link>
+      </nav>
     </div>
 
-    <div class="container">
-      <LineChart />
-      <LineChartCompositionApi />
-      <AreaChart />
-      <BarChart />
-      <MixedChart />
-      <DonutChart />
-    </div>
+    <router-view />
   </div>
 </template>
 
 <script>
-/* eslint-disable */
-import AreaChart from "@/components/AreaChart.vue";
-import BarChart from "@/components/BarChart.vue";
-import LineChart from "@/components/LineChart.vue";
-import LineChartCompositionApi from "@/components-composition-api/LineChart.vue";
-import MixedChart from "@/components/MixedChart.vue";
-import DonutChart from "@/components/DonutChart.vue";
-
 export default {
   name: "App",
-  components: {
-    AreaChart,
-    BarChart,
-    DonutChart,
-    LineChart,
-    MixedChart,
-    LineChartCompositionApi,
-  },
-  data: function() {
-    return {};
-  }
 };
 </script>
 
@@ -47,6 +24,38 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 12px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.nav {
+  display: flex;
+  gap: 16px;
+}
+
+.nav a {
+  color: #008FFB;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+.nav a:hover {
+  background: #e8f4ff;
+}
+
+.nav a.router-link-active {
+  background: #008FFB;
+  color: #fff;
 }
 
 .container {

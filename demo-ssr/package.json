@@ -1,0 +1,22 @@
+{
+  "name": "vue3-apexcharts-ssr-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "apexcharts": "^5.7.0",
+    "vue3-apexcharts": "file:../",
+    "nuxt": "^3.11.2",
+    "vue": "^3.4.21"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "^1.2.0"
+  }
+}

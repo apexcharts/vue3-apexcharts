@@ -12,6 +12,20 @@ export interface VueApexChartsComponentProps {
   height?: string | number;
 }
 
+export interface ApexChartsServerProps {
+  type?: string;
+  width?: number | string;
+  height?: number | string;
+  series?: any[];
+  options?: ApexOptions;
+  className?: string;
+}
+
+export interface ApexChartsHydrateProps {
+  clientOptions?: any;
+  className?: string;
+}
+
 export interface VueApexChartsComponentMethods {
   init(): Promise<void>;
   refresh(): Promise<void>;
@@ -41,7 +55,11 @@ export interface VueApexChartsComponentMethods {
 }
 
 type VueApexChartsComponentType = DefineComponent<VueApexChartsComponentProps, VueApexChartsComponentMethods>;
+type ApexChartsServerComponentType = DefineComponent<ApexChartsServerProps>;
+type ApexChartsHydrateComponentType = DefineComponent<ApexChartsHydrateProps>;
 
 declare const VueApexCharts: VueApexChartsComponentType & Plugin;
+export const ApexChartsServer: ApexChartsServerComponentType;
+export const ApexChartsHydrate: ApexChartsHydrateComponentType;
 
 export default VueApexCharts;

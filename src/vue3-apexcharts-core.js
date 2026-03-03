@@ -1,4 +1,18 @@
 /* eslint-disable */
+/**
+ * Core variant of the vue3-apexcharts component.
+ *
+ * Imports ApexCharts from 'apexcharts/core' (bare class, no features registered).
+ * Feature registration (legend, toolbar, annotations, exports, keyboard) is the
+ * responsibility of the application:
+ *
+ *   import 'apexcharts/features/legend'
+ *   import 'apexcharts/features/toolbar'
+ *   // etc.
+ *
+ * The component logic is identical to the default variant — only the ApexCharts
+ * import entry point differs.
+ */
 import {
   h,
   defineComponent,
@@ -11,7 +25,7 @@ import {
   nextTick,
   toRefs,
 } from "vue";
-import ApexCharts from "apexcharts";
+import ApexCharts from "apexcharts/core";
 
 // define all emitted events in order to better
 // document how the component should work
@@ -36,7 +50,7 @@ const events = [
   "brushScrolled",
 ];
 
-const vueApexcharts = defineComponent({
+const vueApexchartsCore = defineComponent({
   name: "apexchart",
   props: {
     options: {
@@ -340,4 +354,4 @@ const vueApexcharts = defineComponent({
   },
 });
 
-export default vueApexcharts;
+export default vueApexchartsCore;

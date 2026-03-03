@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 demo/node_modules
+demo-ssr/node_modules
 
 # local env files
 .env.local
@@ -20,3 +21,12 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Test coverage
+coverage
+.nyc_output
+
+# Demo SSR
+demo-ssr/.nuxt
+demo-ssr/.output
+demo-ssr/dist

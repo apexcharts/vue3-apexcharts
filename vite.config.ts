@@ -6,6 +6,7 @@ import vue from "@vitejs/plugin-vue";
 export default defineConfig({
   plugins: [vue()],
   build: {
+    emptyOutDir: false,
     lib: {
       // src/indext.ts is where we have exported the component(s)
       entry: resolve(__dirname, "src/index.js"),
@@ -20,9 +21,10 @@ export default defineConfig({
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps
+        exports: "named",
         globals: {
           vue: "Vue",
-          apexcharts: "ApexCharts"
+          apexcharts: "ApexCharts",
         },
       },
     },
