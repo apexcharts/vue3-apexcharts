@@ -276,26 +276,26 @@ Each chart type has its own import that matches the type name you pass to the co
 
 **Chart types:**
 
-| Import | type string |
-|--------|-------------|
-| `apexcharts/line` | `"line"` |
-| `apexcharts/area` | `"area"` |
-| `apexcharts/scatter` | `"scatter"` |
-| `apexcharts/bubble` | `"bubble"` |
-| `apexcharts/rangeArea` | `"rangeArea"` |
-| `apexcharts/bar` | `"bar"` |
-| `apexcharts/column` | `"column"` |
-| `apexcharts/barStacked` | `"barStacked"` |
-| `apexcharts/rangeBar` | `"rangeBar"` |
-| `apexcharts/pie` | `"pie"` |
-| `apexcharts/donut` | `"donut"` |
-| `apexcharts/polarArea` | `"polarArea"` |
-| `apexcharts/radialBar` | `"radialBar"` |
-| `apexcharts/radar` | `"radar"` |
+| Import                   | type string     |
+| ------------------------ | --------------- |
+| `apexcharts/line`        | `"line"`        |
+| `apexcharts/area`        | `"area"`        |
+| `apexcharts/scatter`     | `"scatter"`     |
+| `apexcharts/bubble`      | `"bubble"`      |
+| `apexcharts/rangeArea`   | `"rangeArea"`   |
+| `apexcharts/bar`         | `"bar"`         |
+| `apexcharts/column`      | `"column"`      |
+| `apexcharts/barStacked`  | `"barStacked"`  |
+| `apexcharts/rangeBar`    | `"rangeBar"`    |
+| `apexcharts/pie`         | `"pie"`         |
+| `apexcharts/donut`       | `"donut"`       |
+| `apexcharts/polarArea`   | `"polarArea"`   |
+| `apexcharts/radialBar`   | `"radialBar"`   |
+| `apexcharts/radar`       | `"radar"`       |
 | `apexcharts/candlestick` | `"candlestick"` |
-| `apexcharts/boxPlot` | `"boxPlot"` |
-| `apexcharts/heatmap` | `"heatmap"` |
-| `apexcharts/treemap` | `"treemap"` |
+| `apexcharts/boxPlot`     | `"boxPlot"`     |
+| `apexcharts/heatmap`     | `"heatmap"`     |
+| `apexcharts/treemap`     | `"treemap"`     |
 
 **Optional features:**
 | Import | Description |
@@ -306,29 +306,7 @@ Each chart type has its own import that matches the type name you pass to the co
 | `apexcharts/features/exports` | PNG/SVG/CSV export |
 | `apexcharts/features/keyboard` | Keyboard navigation & accessibility |
 
-> **Note:** Tree-shaking requires ApexCharts v5.8.1+.
-
-### Vite: preventing "chart type X is not registered" errors
-
-Vite's dependency pre-bundler can create two separate copies of the ApexCharts module — one for `apexcharts/core` and separate ones for each sub-entry — causing registrations to be lost. If you see this error even though you have the correct imports, add your apexcharts entries to `optimizeDeps.include`:
-
-```js
-// vite.config.js
-export default {
-  optimizeDeps: {
-    include: [
-      'apexcharts/core',
-      'apexcharts/line',
-      'apexcharts/bar',
-      // ...all apexcharts/* entries you import
-      'apexcharts/features/legend',
-      'apexcharts/features/toolbar',
-    ],
-  },
-}
-```
-
-This forces Vite to pre-bundle all sub-entries together so they share a single ApexCharts instance and all registrations are preserved.
+> **Note:** Tree-shaking requires ApexCharts v5.10.3+.
 
 ## Server-Side Rendering (SSR)
 
