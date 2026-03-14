@@ -26,6 +26,7 @@ import {
   toRefs,
 } from "vue";
 import ApexCharts from "apexcharts/core";
+import { copyData } from "./utils.js";
 
 // define all emitted events in order to better
 // document how the component should work
@@ -128,10 +129,6 @@ const vueApexchartsCore = defineComponent({
       return output;
     };
 
-    // Deep clone helper to break reactive references before passing data to ApexCharts.
-    // This prevents ApexCharts' internal mutations from triggering Vue's deep watchers,
-    // which would cause a feedback loop that kills animations.
-    const copyData = (data) => JSON.parse(JSON.stringify(data));
 
     const init = async () => {
       await nextTick();
