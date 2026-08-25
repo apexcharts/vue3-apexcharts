@@ -16,19 +16,29 @@ jobs:
 
       - name: Check commit message for release trigger
         id: check
+        # Pass the commit message via env, never interpolate it into the script.
+        # Inlining ${{ github.event.head_commit.message }} pastes attacker- or
+        # author-controlled text straight into bash: backticks in a commit body
+        # ran as command substitution and failed this step with exit 127, and in
+        # a job holding id-token: write that is a command-injection vector, not
+        # just a crash.
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
         run: |
-          MSG="${{ github.event.head_commit.message }}"
-          if echo "$MSG" | grep -qE '^release: [0-9]+\.[0-9]+\.[0-9]+'; then
-            VERSION=$(echo "$MSG" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+[^ ]*' | head -1)
-            echo "triggered=true" >> $GITHUB_OUTPUT
-            echo "version=$VERSION" >> $GITHUB_OUTPUT
-            if echo "$VERSION" | grep -qE '[-]'; then
-              echo "tag=next" >> $GITHUB_OUTPUT
+          # Only the first line (subject) is the release trigger. Matching the
+          # whole message let a body line beginning "release:" publish.
+          SUBJECT=$(printf '%s\n' "$COMMIT_MSG" | head -n1)
+          if printf '%s' "$SUBJECT" | grep -qE '^release: [0-9]+\.[0-9]+\.[0-9]+'; then
+            VERSION=$(printf '%s' "$SUBJECT" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+[^ ]*' | head -n1)
+            echo "triggered=true" >> "$GITHUB_OUTPUT"
+            echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+            if printf '%s' "$VERSION" | grep -qE '-'; then
+              echo "tag=next" >> "$GITHUB_OUTPUT"
             else
-              echo "tag=latest" >> $GITHUB_OUTPUT
+              echo "tag=latest" >> "$GITHUB_OUTPUT"
             fi
           else
-            echo "triggered=false" >> $GITHUB_OUTPUT
+            echo "triggered=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Verify package.json version matches commit message
