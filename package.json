@@ -36,7 +36,7 @@
     "dist/apexcharts.ssr.esm*",
     "typings"
   ],
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "SEE LICENSE IN LICENSE.md",
   "keywords": [
     "vuejs",
     "vue3",
