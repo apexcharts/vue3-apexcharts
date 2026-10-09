@@ -1,6 +1,8 @@
-import { defineComponent as A, ref as w, onBeforeMount as K, onMounted as L, getCurrentInstance as G, onBeforeUnmount as E, toRefs as Q, watch as f, h as V, nextTick as j, onServerPrefetch as W, openBlock as ee, createElementBlock as te, normalizeClass as ne } from "vue";
+import { defineComponent as w, ref as b, onBeforeMount as G, onMounted as E, getCurrentInstance as J, onBeforeUnmount as L, toRefs as Q, watch as f, h as V, nextTick as j, onServerPrefetch as W, openBlock as ee, createElementBlock as te, normalizeClass as ne } from "vue";
 import _ from "apexcharts";
-const C = [
+const l = (e) => typeof e == "function" ? e : Array.isArray(e) ? e.map(l) : e !== null && typeof e == "object" ? Object.fromEntries(
+  Object.entries(e).map(([a, r]) => [a, l(r)])
+) : e, C = [
   "animationEnd",
   "beforeMount",
   "mounted",
@@ -19,7 +21,7 @@ const C = [
   "zoomed",
   "scrolled",
   "brushScrolled"
-], x = A({
+], S = w({
   name: "apexchart",
   props: {
     options: {
@@ -41,13 +43,13 @@ const C = [
   },
   // events emitted by this component
   emits: C,
-  setup(t, { emit: s }) {
-    const r = w(null), n = w(null), l = (e) => e && typeof e == "object" && !Array.isArray(e) && e != null, g = (e, o) => {
+  setup(e, { emit: a }) {
+    const r = b(null), n = b(null), u = (t) => t && typeof t == "object" && !Array.isArray(t) && t != null, g = (t, o) => {
       typeof Object.assign != "function" && function() {
-        Object.assign = function(a) {
-          if (a == null)
+        Object.assign = function(s) {
+          if (s == null)
             throw new TypeError("Cannot convert undefined or null to object");
-          let m = Object(a);
+          let m = Object(s);
           for (let c = 1; c < arguments.length; c++) {
             let p = arguments[c];
             if (p != null)
@@ -57,65 +59,65 @@ const C = [
           return m;
         };
       }();
-      let i = Object.assign({}, e);
-      return l(e) && l(o) && Object.keys(o).forEach((a) => {
-        l(o[a]) ? a in e ? i[a] = g(e[a], o[a]) : Object.assign(i, {
-          [a]: o[a]
+      let i = Object.assign({}, t);
+      return u(t) && u(o) && Object.keys(o).forEach((s) => {
+        u(o[s]) ? s in t ? i[s] = g(t[s], o[s]) : Object.assign(i, {
+          [s]: o[s]
         }) : Object.assign(i, {
-          [a]: o[a]
+          [s]: o[s]
         });
       }), i;
-    }, u = (e) => JSON.parse(JSON.stringify(e)), v = async () => {
+    }, v = async () => {
       if (await j(), n.value)
         return;
-      const e = {
+      const t = {
         chart: {
-          type: t.type || t.options.chart && t.options.chart.type || "line",
-          height: t.height,
-          width: t.width,
+          type: e.type || e.options.chart && e.options.chart.type || "line",
+          height: e.height,
+          width: e.width,
           events: {}
         },
-        series: u(t.series)
-      }, o = t.options.chart ? t.options.chart.events : null;
-      C.forEach((a) => {
-        let m = (...c) => s(a, ...c);
-        e.chart.events[a] = (...c) => {
-          m(...c), o && o.hasOwnProperty(a) && o[a](...c);
+        series: l(e.series)
+      }, o = e.options.chart ? e.options.chart.events : null;
+      C.forEach((s) => {
+        let m = (...c) => a(s, ...c);
+        t.chart.events[s] = (...c) => {
+          m(...c), o && o.hasOwnProperty(s) && o[s](...c);
         };
       });
-      const i = g(t.options, e);
+      const i = g(e.options, t);
       return n.value = new _(r.value, i), n.value.render();
-    }, y = () => (S(), v()), S = () => {
+    }, y = () => (A(), v()), A = () => {
       n.value.destroy(), n.value = null;
-    }, T = (e, o) => n.value.updateSeries(e, o), H = (e, o, i, a) => n.value.updateOptions(e, o, i, a), N = (e) => n.value.toggleSeries(e), $ = (e) => {
-      n.value.showSeries(e);
-    }, D = (e) => {
-      n.value.hideSeries(e);
-    }, U = (e, o) => n.value.appendSeries(e, o), z = () => {
+    }, T = (t, o) => n.value.updateSeries(t, o), H = (t, o, i, s) => n.value.updateOptions(t, o, i, s), $ = (t) => n.value.toggleSeries(t), D = (t) => {
+      n.value.showSeries(t);
+    }, U = (t) => {
+      n.value.hideSeries(t);
+    }, z = (t, o) => n.value.appendSeries(t, o), B = () => {
       n.value.resetSeries();
-    }, B = (e, o) => {
-      n.value.toggleDataPointSelection(e, o);
-    }, I = (e) => n.value.appendData(e), R = (e, o) => n.value.zoomX(e, o), X = (e) => n.value.dataURI(e), k = (e) => n.value.setLocale(e), F = (e, o) => {
-      n.value.addXaxisAnnotation(e, o);
-    }, J = (e, o) => {
-      n.value.addYaxisAnnotation(e, o);
-    }, Y = (e, o) => {
-      n.value.addPointAnnotation(e, o);
-    }, Z = (e, o) => {
-      n.value.removeAnnotation(e, o);
-    }, q = () => {
+    }, I = (t, o) => {
+      n.value.toggleDataPointSelection(t, o);
+    }, N = (t) => n.value.appendData(t), R = (t, o) => n.value.zoomX(t, o), X = (t) => n.value.dataURI(t), k = (t) => n.value.setLocale(t), F = (t, o) => {
+      n.value.addXaxisAnnotation(t, o);
+    }, Y = (t, o) => {
+      n.value.addYaxisAnnotation(t, o);
+    }, Z = (t, o) => {
+      n.value.addPointAnnotation(t, o);
+    }, q = (t, o) => {
+      n.value.removeAnnotation(t, o);
+    }, K = () => {
       n.value.clearAnnotations();
     };
-    K(() => {
+    G(() => {
       window.ApexCharts = _;
-    }), L(() => {
-      r.value = G().proxy.$el, v();
     }), E(() => {
-      n.value && S();
+      r.value = J().proxy.$el, v();
+    }), L(() => {
+      n.value && A();
     });
-    const d = Q(t);
+    const d = Q(e);
     let h = null;
-    const b = (e) => {
+    const x = (t) => {
       h || (h = { options: !1, series: !1 }, j(() => {
         const o = h;
         if (h = null, !n.value) {
@@ -123,18 +125,18 @@ const C = [
           return;
         }
         if (o.options && o.series) {
-          const i = u(t.options);
-          i.series = u(t.series), n.value.updateOptions(i);
+          const i = l(e.options);
+          i.series = l(e.series), n.value.updateOptions(i);
         } else
-          o.options ? n.value.updateOptions(u(t.options)) : o.series && n.value.updateSeries(u(t.series));
-      })), h[e] = !0;
+          o.options ? n.value.updateOptions(l(e.options)) : o.series && n.value.updateSeries(l(e.series));
+      })), h[t] = !0;
     };
     return f(d.options, () => {
-      b("options");
+      x("options");
     }), f(
       d.series,
       () => {
-        b("series");
+        x("series");
       },
       { deep: !0 }
     ), f(d.type, () => {
@@ -147,22 +149,22 @@ const C = [
       chart: n,
       init: v,
       refresh: y,
-      destroy: S,
+      destroy: A,
       updateOptions: H,
       updateSeries: T,
-      toggleSeries: N,
-      showSeries: $,
-      hideSeries: D,
-      resetSeries: z,
+      toggleSeries: $,
+      showSeries: D,
+      hideSeries: U,
+      resetSeries: B,
       zoomX: R,
-      toggleDataPointSelection: B,
-      appendData: I,
-      appendSeries: U,
+      toggleDataPointSelection: I,
+      appendData: N,
+      appendSeries: z,
       addXaxisAnnotation: F,
-      addYaxisAnnotation: J,
-      addPointAnnotation: Y,
-      removeAnnotation: Z,
-      clearAnnotations: q,
+      addYaxisAnnotation: Y,
+      addPointAnnotation: Z,
+      removeAnnotation: q,
+      clearAnnotations: K,
       setLocale: k,
       dataURI: X
     };
@@ -172,12 +174,12 @@ const C = [
       class: "vue-apexcharts"
     });
   }
-}), oe = (t, s) => {
-  const r = t.__vccOpts || t;
-  for (const [n, l] of s)
-    r[n] = l;
+}), oe = (e, a) => {
+  const r = e.__vccOpts || e;
+  for (const [n, u] of a)
+    r[n] = u;
   return r;
-}, ae = A({
+}, re = w({
   name: "apexchart-server",
   props: {
     type: {
@@ -205,37 +207,37 @@ const C = [
       default: ""
     }
   },
-  setup(t) {
-    const s = w("");
+  setup(e) {
+    const a = b("");
     return W(async () => {
       try {
-        const { default: r } = await import("./apexcharts.ssr.esm-fe46cd2d.js"), n = Object.assign({}, t.options, {
-          chart: Object.assign({}, t.options.chart, {
-            type: t.type,
-            width: t.width,
-            height: t.height
+        const { default: r } = await import("apexcharts/ssr"), n = Object.assign({}, e.options, {
+          chart: Object.assign({}, e.options.chart, {
+            type: e.type,
+            width: e.width,
+            height: e.height
           }),
-          series: t.series
+          series: e.series
         });
-        s.value = await r.renderToHTML(n, {
-          width: t.width,
-          height: t.height
+        a.value = await r.renderToHTML(n, {
+          width: e.width,
+          height: e.height
         });
       } catch (r) {
         console.error("Failed to render ApexChart on server:", r);
       }
     }), {
-      chartHTML: s
+      chartHTML: a
     };
   }
-}), re = ["innerHTML"];
-function se(t, s, r, n, l, g) {
+}), se = ["innerHTML"];
+function ae(e, a, r, n, u, g) {
   return ee(), te("div", {
-    innerHTML: t.chartHTML,
-    class: ne(t.className)
-  }, null, 10, re);
+    innerHTML: e.chartHTML,
+    class: ne(e.className)
+  }, null, 10, se);
 }
-const M = /* @__PURE__ */ oe(ae, [["render", se]]), P = A({
+const M = /* @__PURE__ */ oe(re, [["render", ae]]), P = w({
   name: "apexchart-hydrate",
   props: {
     clientOptions: {
@@ -247,30 +249,30 @@ const M = /* @__PURE__ */ oe(ae, [["render", se]]), P = A({
       default: "[data-apexcharts-hydrate]"
     }
   },
-  setup(t) {
-    let s = [];
-    L(async () => {
+  setup(e) {
+    let a = [];
+    E(async () => {
       try {
-        const { default: r } = await import("./apexcharts.ssr.esm-fe46cd2d.js");
-        s = r.hydrateAll(t.selector, t.clientOptions);
+        const { default: r } = await import("apexcharts/ssr");
+        a = r.hydrateAll(e.selector, e.clientOptions);
       } catch (r) {
         console.error("Failed to hydrate ApexCharts:", r);
       }
-    }), E(() => {
-      s.forEach((r) => {
+    }), L(() => {
+      a.forEach((r) => {
         r && r.destroy && r.destroy();
-      }), s = [];
+      }), a = [];
     });
   },
   render() {
     return null;
   }
-}), ie = (t) => {
-  t.component(x.name, x), t.component(M.name, M), t.component(P.name, P);
+}), ie = (e) => {
+  e.component(S.name, S), e.component(M.name, M), e.component(P.name, P);
 };
-x.install = ie;
+S.install = ie;
 export {
   P as ApexChartsHydrate,
   M as ApexChartsServer,
-  x as default
+  S as default
 };
