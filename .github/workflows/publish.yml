@@ -63,14 +63,30 @@ jobs:
         with:
           node-version: "24"
 
-      - run: yarn install --frozen-lockfile
+      # npm, matching the committed package-lock.json. There is no yarn.lock,
+      # so `yarn install --frozen-lockfile` had nothing to hold it to and
+      # would have resolved fresh versions on the release runner.
+      - run: npm ci
         if: steps.check.outputs.triggered == 'true'
 
-      - run: yarn test
+      - run: npm test
         if: steps.check.outputs.triggered == 'true'
 
-      - run: yarn build
+      - run: npm run build
         if: steps.check.outputs.triggered == 'true'
+
+      # The components use the app's own apexcharts, so none may ship in dist.
+      # 1.11.1 did: the build externalised only the bare "apexcharts", so the
+      # server components' import('apexcharts/ssr') pulled the version
+      # installed on the build machine (5.10.0) into the package.
+      - name: Check dist carries no copy of ApexCharts
+        if: steps.check.outputs.triggered == 'true'
+        run: |
+          if ls dist/apexcharts* 2>/dev/null || grep -l 'ApexCharts v[0-9]' dist/*.js dist/*.cjs; then
+            echo "dist bundles ApexCharts: every apexcharts import must stay external (vite.config*.ts)"
+            exit 1
+          fi
+          echo "dist leaves apexcharts to the app"
 
       - run: npm publish --provenance --tag ${{ steps.check.outputs.tag }}
         if: steps.check.outputs.triggered == 'true'

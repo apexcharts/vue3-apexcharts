@@ -33,7 +33,6 @@
   "files": [
     "src",
     "dist/vue3-apexcharts*",
-    "dist/apexcharts.ssr.esm*",
     "typings"
   ],
   "license": "SEE LICENSE IN LICENSE.md",
