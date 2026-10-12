@@ -72,6 +72,18 @@ jobs:
       - run: npm test
         if: steps.check.outputs.triggered == 'true'
 
+      # npm ci installs the apexcharts devDependency (8.x), but the peer range
+      # still accepts 5.10, so run the suite again on the oldest supported
+      # release. Behaviour differs between them: 8.x turns a Date xaxis.min
+      # into a timestamp, 5.x drops it, so passing on one proves nothing about
+      # the other. --no-save leaves package.json and the lockfile alone, and
+      # the build below keeps apexcharts external, so this copy never ships.
+      - name: Test on the oldest supported apexcharts (5.10.3)
+        if: steps.check.outputs.triggered == 'true'
+        run: |
+          npm install --no-save apexcharts@5.10.3
+          npm test
+
       - run: npm run build
         if: steps.check.outputs.triggered == 'true'
 
