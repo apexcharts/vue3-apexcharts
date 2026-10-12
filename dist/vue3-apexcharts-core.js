@@ -1,8 +1,22 @@
-import { defineComponent as $, ref as w, onBeforeMount as F, onMounted as G, getCurrentInstance as H, onBeforeUnmount as J, toRefs as N, watch as d, h as Q, nextTick as x } from "vue";
+import { defineComponent as K, ref as V, shallowRef as W, onBeforeMount as $, onMounted as F, getCurrentInstance as G, onBeforeUnmount as H, toRefs as J, watch as p, h as N, nextTick as x } from "vue";
 import j from "apexcharts/core";
-const a = (o) => typeof o == "function" ? o : Array.isArray(o) ? o.map(a) : o !== null && typeof o == "object" ? Object.fromEntries(
-  Object.entries(o).map(([m, f]) => [m, a(f)])
-) : o, P = [
+const b = (t, r) => {
+  if (typeof t == "function" || t === null || typeof t != "object" || t instanceof Date || t instanceof RegExp)
+    return t;
+  if (r.has(t))
+    return r.get(t);
+  if (Array.isArray(t)) {
+    const n = new Array(t.length);
+    return r.set(t, n), t.forEach((u, v) => {
+      n[v] = b(u, r);
+    }), n;
+  }
+  const l = {};
+  r.set(t, l);
+  for (const [n, u] of Object.entries(t))
+    l[n] = b(u, r);
+  return l;
+}, h = (t) => b(t, /* @__PURE__ */ new WeakMap()), P = [
   "animationEnd",
   "beforeMount",
   "mounted",
@@ -21,7 +35,7 @@ const a = (o) => typeof o == "function" ? o : Array.isArray(o) ? o.map(a) : o !=
   "zoomed",
   "scrolled",
   "brushScrolled"
-], A = $({
+], S = K({
   name: "apexchart",
   props: {
     options: {
@@ -43,141 +57,141 @@ const a = (o) => typeof o == "function" ? o : Array.isArray(o) ? o.map(a) : o !=
   },
   // events emitted by this component
   emits: P,
-  setup(o, { emit: m }) {
-    const f = w(null), n = w(null), g = (e) => e && typeof e == "object" && !Array.isArray(e) && e != null, O = (e, t) => {
+  setup(t, { emit: r }) {
+    const l = V(null), n = W(null), u = (e) => e && typeof e == "object" && !Array.isArray(e) && e != null, v = (e, o) => {
       typeof Object.assign != "function" && function() {
         Object.assign = function(s) {
           if (s == null)
             throw new TypeError("Cannot convert undefined or null to object");
-          let h = Object(s);
-          for (let r = 1; r < arguments.length; r++) {
-            let c = arguments[r];
-            if (c != null)
-              for (let y in c)
-                c.hasOwnProperty(y) && (h[y] = c[y]);
+          let m = Object(s);
+          for (let a = 1; a < arguments.length; a++) {
+            let d = arguments[a];
+            if (d != null)
+              for (let A in d)
+                d.hasOwnProperty(A) && (m[A] = d[A]);
           }
-          return h;
+          return m;
         };
       }();
       let i = Object.assign({}, e);
-      return g(e) && g(t) && Object.keys(t).forEach((s) => {
-        g(t[s]) ? s in e ? i[s] = O(e[s], t[s]) : Object.assign(i, {
-          [s]: t[s]
+      return u(e) && u(o) && Object.keys(o).forEach((s) => {
+        u(o[s]) ? s in e ? i[s] = v(e[s], o[s]) : Object.assign(i, {
+          [s]: o[s]
         }) : Object.assign(i, {
-          [s]: t[s]
+          [s]: o[s]
         });
       }), i;
-    }, p = async () => {
+    }, y = async () => {
       if (await x(), n.value)
         return;
       const e = {
         chart: {
-          type: o.type || o.options.chart && o.options.chart.type || "line",
-          height: o.height,
-          width: o.width,
+          type: t.type || t.options.chart && t.options.chart.type || "line",
+          height: t.height,
+          width: t.width,
           events: {}
         },
-        series: a(o.series)
-      }, t = o.options.chart ? o.options.chart.events : null;
+        series: h(t.series)
+      }, o = t.options.chart ? t.options.chart.events : null;
       P.forEach((s) => {
-        let h = (...r) => m(s, ...r);
-        e.chart.events[s] = (...r) => {
-          h(...r), t && t.hasOwnProperty(s) && t[s](...r);
+        let m = (...a) => r(s, ...a);
+        e.chart.events[s] = (...a) => {
+          m(...a), o && o.hasOwnProperty(s) && o[s](...a);
         };
       });
-      const i = O(o.options, e);
-      return n.value = new j(f.value, i), n.value.render();
-    }, v = () => (b(), p()), b = () => {
+      const i = v(t.options, e);
+      return n.value = new j(l.value, i), n.value.render();
+    }, g = () => (w(), y()), w = () => {
       n.value.destroy(), n.value = null;
-    }, C = (e, t) => n.value.updateSeries(e, t), E = (e, t, i, s) => n.value.updateOptions(e, t, i, s), M = (e) => n.value.toggleSeries(e), D = (e) => {
+    }, C = (e, o) => n.value.updateSeries(e, o), E = (e, o, i, s) => n.value.updateOptions(e, o, i, s), M = (e) => n.value.toggleSeries(e), D = (e) => {
       n.value.showSeries(e);
-    }, U = (e) => {
+    }, R = (e) => {
       n.value.hideSeries(e);
-    }, L = (e, t) => n.value.appendSeries(e, t), R = () => {
+    }, U = (e, o) => n.value.appendSeries(e, o), L = () => {
       n.value.resetSeries();
-    }, X = (e, t) => {
-      n.value.toggleDataPointSelection(e, t);
-    }, z = (e) => n.value.appendData(e), I = (e, t) => n.value.zoomX(e, t), _ = (e) => n.value.dataURI(e), B = (e) => n.value.setLocale(e), T = (e, t) => {
-      n.value.addXaxisAnnotation(e, t);
-    }, Y = (e, t) => {
-      n.value.addYaxisAnnotation(e, t);
-    }, Z = (e, t) => {
-      n.value.addPointAnnotation(e, t);
-    }, q = (e, t) => {
-      n.value.removeAnnotation(e, t);
-    }, K = () => {
+    }, X = (e, o) => {
+      n.value.toggleDataPointSelection(e, o);
+    }, z = (e) => n.value.appendData(e), I = (e, o) => n.value.zoomX(e, o), _ = (e) => n.value.dataURI(e), B = (e) => n.value.setLocale(e), T = (e, o) => {
+      n.value.addXaxisAnnotation(e, o);
+    }, Y = (e, o) => {
+      n.value.addYaxisAnnotation(e, o);
+    }, Z = (e, o) => {
+      n.value.addPointAnnotation(e, o);
+    }, k = (e, o) => {
+      n.value.removeAnnotation(e, o);
+    }, q = () => {
       n.value.clearAnnotations();
     };
-    F(() => {
+    $(() => {
       window.ApexCharts = j;
-    }), G(() => {
-      f.value = H().proxy.$el, p();
-    }), J(() => {
-      n.value && b();
+    }), F(() => {
+      l.value = G().proxy.$el, y();
+    }), H(() => {
+      n.value && w();
     });
-    const u = N(o);
-    let l = null;
-    const S = (e) => {
-      l || (l = { options: !1, series: !1 }, x(() => {
-        const t = l;
-        if (l = null, !n.value) {
-          p();
+    const c = J(t);
+    let f = null;
+    const O = (e) => {
+      f || (f = { options: !1, series: !1 }, x(() => {
+        const o = f;
+        if (f = null, !n.value) {
+          y();
           return;
         }
-        if (t.options && t.series) {
-          const i = a(o.options);
-          i.series = a(o.series), n.value.updateOptions(i);
+        if (o.options && o.series) {
+          const i = h(t.options);
+          i.series = h(t.series), n.value.updateOptions(i);
         } else
-          t.options ? n.value.updateOptions(a(o.options)) : t.series && n.value.updateSeries(a(o.series));
-      })), l[e] = !0;
+          o.options ? n.value.updateOptions(h(t.options)) : o.series && n.value.updateSeries(h(t.series));
+      })), f[e] = !0;
     };
-    return d(u.options, () => {
-      S("options");
-    }), d(
-      u.series,
+    return p(c.options, () => {
+      O("options");
+    }), p(
+      c.series,
       () => {
-        S("series");
+        O("series");
       },
       { deep: !0 }
-    ), d(u.type, () => {
-      v();
-    }), d(u.width, () => {
-      v();
-    }), d(u.height, () => {
-      v();
+    ), p(c.type, () => {
+      g();
+    }), p(c.width, () => {
+      g();
+    }), p(c.height, () => {
+      g();
     }), {
       chart: n,
-      init: p,
-      refresh: v,
-      destroy: b,
+      init: y,
+      refresh: g,
+      destroy: w,
       updateOptions: E,
       updateSeries: C,
       toggleSeries: M,
       showSeries: D,
-      hideSeries: U,
-      resetSeries: R,
+      hideSeries: R,
+      resetSeries: L,
       zoomX: I,
       toggleDataPointSelection: X,
       appendData: z,
-      appendSeries: L,
+      appendSeries: U,
       addXaxisAnnotation: T,
       addYaxisAnnotation: Y,
       addPointAnnotation: Z,
-      removeAnnotation: q,
-      clearAnnotations: K,
+      removeAnnotation: k,
+      clearAnnotations: q,
       setLocale: B,
       dataURI: _
     };
   },
   render() {
-    return Q("div", {
+    return N("div", {
       class: "vue-apexcharts"
     });
   }
-}), V = (o) => {
-  o.component(A.name, A);
+}), Q = (t) => {
+  t.component(S.name, S);
 };
-A.install = V;
+S.install = Q;
 export {
-  A as default
+  S as default
 };
