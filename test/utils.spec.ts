@@ -28,7 +28,18 @@ describe("copyData", () => {
     expect(copy.pattern).toBe(pattern);
   });
 
-  it("terminates on a self-referencing option graph", () => {
+  it("keeps the length of sparse arrays", () => {
+    expect(copyData([1, , 3, ,])).toHaveLength(4);
+    expect(copyData(new Array(24))).toHaveLength(24);
+  });
+
+  it("ignores extra arguments, so it can be passed to map directly", () => {
+    const rows = [{ x: 1 }, { x: 2 }];
+
+    expect(rows.map(copyData)).toEqual(rows);
+  });
+
+  it("does not loop on a self-referencing value", () => {
     const options: Record<string, unknown> = { chart: { type: "line" } };
     options.self = options;
 

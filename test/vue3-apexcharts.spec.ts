@@ -368,6 +368,31 @@ describe("VueApexCharts Component", () => {
       expect(calledWith).not.toBe(newSeries);
     });
 
+    it("should keep Dates in options and series on updates", async () => {
+      const wrapper = mount(VueApexCharts, {
+        props: defaultProps,
+      });
+
+      await flushPromises();
+
+      const ApexCharts = (await import("apexcharts")).default;
+      const mockInstance = ApexCharts.mock.results[0].value;
+      mockInstance.updateOptions.mockClear();
+
+      const min = new Date("2020-01-01T00:00:00.000Z");
+      const x = new Date("2020-02-01T00:00:00.000Z");
+      await wrapper.setProps({
+        options: { ...defaultProps.options, xaxis: { type: "datetime", min } },
+        series: [{ name: "Series 1", data: [{ x, y: 10 }] }],
+      });
+      await flushPromises();
+
+      // Copied entry by entry, a Date arrives as {} and ApexCharts drops it.
+      const optionsArg = mockInstance.updateOptions.mock.calls[0][0];
+      expect(optionsArg.xaxis.min).toBe(min);
+      expect(optionsArg.series[0].data[0].x).toBe(x);
+    });
+
     it("should coalesce simultaneous options and series changes into a single updateOptions call", async () => {
       const wrapper = mount(VueApexCharts, {
         props: defaultProps,
