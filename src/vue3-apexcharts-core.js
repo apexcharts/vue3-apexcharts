@@ -17,6 +17,7 @@ import {
   h,
   defineComponent,
   ref,
+  shallowRef,
   getCurrentInstance,
   onMounted,
   onBeforeUnmount,
@@ -77,7 +78,12 @@ const vueApexchartsCore = defineComponent({
 
   setup(props, { emit }) {
     const __el = ref(null);
-    const chart = ref(null);
+    // shallowRef, not ref: a deep ref hands back the ApexCharts instance wrapped
+    // in a reactive proxy. Every method then ran with `this` as that proxy, so
+    // each internal read in ApexCharts paid for Vue's dependency tracking, and
+    // the proxy, not the instance, was what got registered in
+    // Apex._chartInstances. Only replacing the instance needs to be reactive.
+    const chart = shallowRef(null);
 
     const isObject = (item) => {
       return item && typeof item === "object" && !Array.isArray(item) && item != null;
