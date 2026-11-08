@@ -308,6 +308,56 @@ Each chart type has its own import that matches the type name you pass to the co
 
 > **Note:** Tree-shaking requires ApexCharts v5.10.3+.
 
+## Using with Ignite UI
+
+From ApexCharts 8.8.0, charts can follow the Ignite UI theme on the page: its palette, text, gridlines, tooltips, font and light or dark variant. Import the add-on once, next to `app.use(VueApexCharts)`, before the first chart renders. It is free and needs no license key.
+
+```js
+import "apexcharts/features/ignite-ui";
+```
+
+It works with `vue3-apexcharts` and `vue3-apexcharts/core` alike. On a page that loads ApexCharts with a script tag, load `dist/features/ignite-ui.js` after `apexcharts.js` instead. Without the add-on the `--ig-*` tokens are ignored, with no error.
+
+To turn it off for one chart:
+
+```js
+const options = {
+  theme: { designSystem: false }, // ignore the Ignite UI theme, keep the --apx-* tokens
+  // theme: { tokens: false },    // ignore the --apx-* tokens and the Ignite UI theme
+};
+```
+
+The Ignite UI theme ranks below everything you set:
+
+```
+explicit options  >  the chart's own CSS variables  >  --apx-* tokens  >  a named theme or palette  >  --ig-* tokens  >  defaults
+```
+
+Tokens are read on every render. After swapping the theme stylesheet at runtime, call `refreshTokens()` on the chart instance (the component's `chart`) once the new stylesheet has loaded:
+
+```vue
+<template>
+  <apexchart ref="chartRef" type="bar" :options="options" :series="series" />
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const chartRef = ref(null);
+
+// call from the new stylesheet's load handler
+function onThemeLoaded() {
+  chartRef.value?.chart?.refreshTokens();
+}
+</script>
+```
+
+`window.ApexCharts.exec("<chart id>", "refreshTokens")` reaches it by chart id as well.
+
+The theme names its font but does not load it, so include the font's stylesheet on the page, as the Ignite UI setup already asks; the chart re-measures once the font has loaded.
+
+With `chart.injectStyleSheet: false` in the light DOM (for example under a strict CSP), link `apexcharts/dist/apexcharts-ignite-ui.css` after `apexcharts.css`, or tooltips and menus keep their default colors.
+
 ## Server-Side Rendering (SSR)
 
 Vue3-ApexCharts includes dedicated components for SSR that work with Nuxt 3 and other Vue SSR frameworks.
